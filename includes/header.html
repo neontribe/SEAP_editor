@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="css/style.css" rel="stylesheet" media="all" />
+<title>JSON content editor - SEAP</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#edit-this-file').change(function() {
+      var opt = $(this).val();
+      $.ajax({
+        type: "POST",
+        url: "content.php",
+        data: "selected_file=" + opt,
+        success:function(data){
+          alert('You have chosen to edit: ' + opt);
+          $('#content').html(data);
+        }
+      });
+    });
+  });
+</script>
+
+</head>
+
