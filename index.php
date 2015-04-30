@@ -11,10 +11,17 @@ include("includes/header.html");
 $dir = 'files';
 
 // Files to exclude.
-$exclude = array('.', '..');
+$exclude = array('.', '..', 'README.md');
 
 $allfiles = scandir($dir);
 $files = array_diff($allfiles, $exclude);
+
+// If session already started and has current file. Select as default.
+session_start();
+echo session_id();
+if (isset($_SESSION) && $_SESSION['file']) {
+  echo $_SESSION['file'];
+}
 
 ?>
 <h1>JSON Content Editor</h1>

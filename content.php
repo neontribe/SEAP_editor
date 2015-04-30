@@ -1,5 +1,6 @@
 <?php
-$file = 'files/' . $_POST['selected_file'];
+$filename = $_POST['selected_file'];
+$file = 'files/' . $filename;
 
 require_once('error.php');
 
@@ -13,16 +14,23 @@ $content = json_decode($content);
 
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
+
+
+// start session and remember file
+session_start();
+$_SESSION['file'] = $filename;
+echo session_id();
+print_r($_SESSION);
 ?>
 
-<h1><?= explode('.', $_POST['selected_file'])[0]; ?></h1>
+<h1><?= explode('.', $filename)[0]; ?></h1>
 
-<?php foreach ($content as $category => $gubbins): ?>
-  <h2><?= $category ?></h2>
+<?php foreach ($content as $type => $gubbins): ?>
+  <h2><?= $type ?></h2>
   <ul>
     <? foreach ($gubbins as $item): ?>
       <?php $title_key = key($item); ?> 
-      <li><?= $item->$title_key; ?></li>
+      <li><a href="content-edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
     <? endforeach; ?>
   </ul>
 <?php endforeach; ?>
