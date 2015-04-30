@@ -1,5 +1,3 @@
-<h1>ESA Content</h1>
-
 <?php
 $file = 'files/' . $_POST['selected_file'];
 
@@ -8,29 +6,23 @@ require_once('error.php');
 if (!can_read_file()) { return; }
 
 $content = file_get_contents($file);
+
+if (!file_has_content($content)) { return; }
+
 $content = json_decode($content);
 
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
-
-$questions = $content->questions;
-$advice = $content->advice;
-
 ?>
 
-<h2>Questions</h2>
-<ul>
+<h1><?= explode('.', $_POST['selected_file'])[0]; ?></h1>
 
-   <? foreach ($questions as $question): ?>
-   <li><?= $question->question; ?></li>
-  <? endforeach; ?>
-
-</ul>
-
-<h2>Advice</h2>
-<ul>
-  <? foreach ($advice as $advice): ?>
-    <li><?= $advice->title; ?></li>
-  <? endforeach; ?>
-</ul>
-
+<?php foreach ($content as $category => $gubbins): ?>
+  <h2><?= $category ?></h2>
+  <ul>
+    <? foreach ($gubbins as $item): ?>
+      <?php $title_key = key($item); ?> 
+      <li><?= $item->$title_key; ?></li>
+    <? endforeach; ?>
+  </ul>
+<?php endforeach; ?>

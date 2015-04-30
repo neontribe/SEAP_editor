@@ -17,6 +17,17 @@ function can_read_file() {
 }
 
 /**
+ *  Check if we have a file and it contains stuff.
+ */
+function file_has_content($content) {
+  if ($content === '') {
+    echo '<p class="error">No file selected or file has no content</p>';
+    return false;
+  }
+  return true;
+}
+
+/**
  *  Check for json errors.
  */
 function is_valid_json() {
