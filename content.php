@@ -3,26 +3,19 @@
 <?php
 $file = 'files/' . $_POST['selected_file'];
 
-//Enable Error Reporting and Display:
-/**
-error_reporting(~0);
-ini_set('display_errors', 1);
+require_once('error.php');
 
-if (ini_get('allow_url_fopen') == 1) {
-    echo '<p style="color: #0A0;">fopen is allowed on this host.</p>';
-} else {
-    echo '<p style="color: #A00;">fopen is not allowed on this host.</p>';
-}
-**/
+if (!can_read_file()) { return; }
 
 $content = file_get_contents($file);
 $content = json_decode($content);
 
-// Check for json errors
-var_dump(json_last_error());
+// Make sure we have valid json content
+if (!is_valid_json()) { return; };
 
 $questions = $content->questions;
 $advice = $content->advice;
+
 ?>
 
 <h2>Questions</h2>
