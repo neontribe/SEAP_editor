@@ -18,9 +18,16 @@ $files = array_diff($allfiles, $exclude);
 
 // If session already started and has current file. Select as default.
 session_start();
-echo session_id();
-if (isset($_SESSION) && $_SESSION['file']) {
-  echo $_SESSION['file'];
+$session_file = '';
+if (isset($_SESSION) && isset($_SESSION['file'])) {
+  $session_file = $_SESSION['file'];
+}
+
+function set_selected($file, $session_file) {
+  if ($file == $session_file) {
+    return ' selected="selected"';
+  }
+  return ''; 
 }
 
 ?>
@@ -29,7 +36,7 @@ if (isset($_SESSION) && $_SESSION['file']) {
   <select id="edit-this-file" name="select_file">
       <option value="">Please select a file</option>
     <? foreach ($files as $file): ?>
-      <option value="<?= $file ?>"><?= $file ?></option>
+      <option value="<?= $file ?>" <?= set_selected($file, $session_file); ?>><?= $file ?></option>
     <? endforeach; ?>
   </select>
 </form>

@@ -19,8 +19,6 @@ if (!is_valid_json()) { return; };
 // start session and remember file
 session_start();
 $_SESSION['file'] = $filename;
-echo session_id();
-print_r($_SESSION);
 ?>
 
 <h1><?= explode('.', $filename)[0]; ?></h1>
