@@ -5,12 +5,10 @@
  *
  */
 
-include("includes/header.html");
+include("includes/header.php");
 
 // get file from session?
 $file = 'my file name';
-session_start();
-print_r($_SESSION);
 // get item from params
 $type = filter_input(INPUT_GET,"type",FILTER_SANITIZE_STRING);
 $key = filter_input(INPUT_GET,"key",FILTER_SANITIZE_STRING);

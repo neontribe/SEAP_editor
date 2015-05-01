@@ -1,6 +1,10 @@
 <?php
-$filename = $_POST['selected_file'];
+include('includes/header.php');
+
+$filename = $_POST['select_file'];
 $file = 'files/' . $filename;
+
+$_SESSION['file'] = $filename;
 
 require_once('error.php');
 
@@ -14,11 +18,6 @@ $content = json_decode($content);
 
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
-
-
-// start session and remember file
-session_start();
-$_SESSION['file'] = $filename;
 ?>
 
 <h1><?= explode('.', $filename)[0]; ?></h1>
