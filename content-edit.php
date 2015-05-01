@@ -40,6 +40,38 @@ foreach ($items as $item) {
 
 // If we haven't found the item
 if (!is_valid_item($edit_item, $type)) { die; }
+
+/**
+ *  Make form elements from type
+ */
+function make_form_element($fieldtype, $fieldname, $fieldvalue) {
+  switch($fieldtype) {
+    case 'string':
+      if (strlen($fieldvalue) > 100) {$inputtype = 'textarea';} else { $inputtype = 'text'; }
+      return '<label>'.$fieldname.'<label><input type="'.$inputtype.'" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
+    break;
+    case 'integer':
+	return 'I am an int';
+    break;
+    case 'boolean':
+	return 'I am a boolean';
+    break;
+    case 'double':
+	return 'I am a float';
+    break;
+    case 'array':
+	return 'Array - iterate again';
+    break;
+    case 'object':
+	return 'Object - no support';
+     break;
+    case 'resource':
+    case 'NULL':
+    default:
+	return 'No form field available for that type. Please contact developer.';
+    break;
+  }
+}
 ?>
 
 <div class="debug">
@@ -53,6 +85,11 @@ if (!is_valid_item($edit_item, $type)) { die; }
 <h2><?= $key ?></h2> from section <strong><?= $type ?></strong> in <?= $file ?></h2>
 
 <form method="post">
+  <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
+  <pre class="debug"><?=var_dump($fieldvalue); ?></pre>
+  <?php $fieldtype = gettype($fieldvalue);?>
+  <?= make_form_element($fieldtype, $fieldname, $fieldvalue); ?>
+  <?php endforeach; ?>
 </form>
 <!-- TODO add ajax preview? -->
 <?php include("includes/footer.php"); ?>
