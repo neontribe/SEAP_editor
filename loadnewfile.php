@@ -5,6 +5,5 @@
  *
  */
 session_start();
-unset($_SESSION['file']);
-header('Location: index.php');
-exit;
+$_SESSION['file'] = '';
+header('Location: /');
