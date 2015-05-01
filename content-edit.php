@@ -28,10 +28,6 @@ $content = json_decode($content);
 // Make sure we have valid json content
 if (!is_valid_json()) { die; }
 
-//var_dump($content);
-echo '<p>Type: '. $type . '</p>';
-echo '<p>Key: ' . $key . '</p>';
-
 $items = $content->$type;
 $edit_item = '';
 
@@ -44,14 +40,15 @@ foreach ($items as $item) {
 
 // If we haven't found the item
 if (!is_valid_item($edit_item, $type)) { die; }
-
-//var_dump($edit_item);
-
 ?>
+
+<div class="debug">
+  <?= var_dump($item); ?>
+</div>
 
 <h1>JSON Item Editor</h1>
 <div class="options">
-  Go back to <a href="/">choose another question</a> or <a href="loadnewfile.php">edit another file</a>
+  <a href="/" class="nav-link">choose another question</a> or <a href="loadnewfile.php" class="nav-link">edit another file</a>
 </div>
 <h2><?= $key ?></h2> from section <strong><?= $type ?></strong> in <?= $file ?></h2>
 

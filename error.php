@@ -69,7 +69,7 @@ function is_valid_item($item, $type) {
 function _error_html($msg, $link=null, $linktext='', $redirect=null) {
   $html  = '<p class="error">' . $msg . '</p>';
   if ($link) {
-    $html .= '<p class="error"><a href="' . $link . '">'. $linktext . '</a></p>';
+    $html .= '<p class="error"><a href="' . $link . '" class="nav-link">'. $linktext . '</a></p>';
   }
   $_SESSION['messages'][] = $html;
   if (!$redirect) {

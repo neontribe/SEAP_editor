@@ -34,7 +34,7 @@ function set_selected($file, $session_file) {
       <option value="<?= $file ?>" <?= set_selected($file, $_SESSION['file']); ?>><?= $file ?></option>
     <? endforeach; ?>
   </select>
-  <input type="submit" value="Edit file">
+  <button type="submit">Edit file</button>
 </form>
 <div id="content">
   Please select a file to edit.
