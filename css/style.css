@@ -25,7 +25,7 @@ main h1, main h2 {
 
 .debug,
 .messages {
-  margin: 60px 20px 20px 20px;
+  margin: 20px;
   padding: 10px;
 }
 
@@ -42,7 +42,7 @@ main h1, main h2 {
 }
 
 .debug {
-  display: none;
+  //display: none;
   background: #E9E991;
   font-size: small;
 }

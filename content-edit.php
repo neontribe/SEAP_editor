@@ -43,7 +43,7 @@ if (!is_valid_item($edit_item, $type)) { die; }
 ?>
 
 <div class="debug">
-  <?= var_dump($item); ?>
+  <?= var_dump($edit_item); ?>
 </div>
 
 <h1>JSON Item Editor</h1>

@@ -24,6 +24,12 @@ if (!is_valid_json()) { return; };
 
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
+  <form method="post" action="addnew.php">
+    <!-- TODO couple of hidden inputs for category and type -->
+    <!-- TODO filter by category radios -->
+    Click to edit or 
+    <button type="submit">Add a new one</button>
+  </form>
   <ul>
     <? foreach ($gubbins as $item): ?>
       <?php $title_key = key($item); ?> 
