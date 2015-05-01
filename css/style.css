@@ -3,10 +3,31 @@ main {
   padding: 50px;
 }
 
+main h1, main h2 {
+  text-align: left;
+}
+
+.debug,
+.messages {
+  margin: 60px 20px 20px 20px;
+  padding: 10px;
+}
+
+.messages:empty {
+  display: none;
+}
+
 .error {
   background: #e39088;
   color: #990000;
   font-weight: 700;
-  margin: 0 50px 0 0;
+  margin: 0;
   padding: 10px;
+}
+
+.debug {
+  //display: none;
+  display: block;
+  background: #E9E991;
+  font-size: small;
 }

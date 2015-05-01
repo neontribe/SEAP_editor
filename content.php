@@ -1,14 +1,14 @@
 <?php
 include('includes/header.php');
-
-$filename = $_POST['select_file'];
-$file = 'files/' . $filename;
-
-$_SESSION['file'] = $filename;
-
 require_once('error.php');
 
 if (!can_read_file()) { return; }
+
+if (!isset($_POST['select_file'])) { return; }
+
+$filename = $_POST['select_file'];
+$file = 'files/' . $filename;
+$_SESSION['file'] = $filename;
 
 $content = file_get_contents($file);
 

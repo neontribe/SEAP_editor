@@ -1,4 +1,5 @@
 </main>
-<footer>&copy; <?=date('Y') ?>Neontribe</footer>
+</div> <!-- end of page -->
+<footer>&copy; <?=date('Y') ?> Neontribe</footer>
 </body>
 </html>

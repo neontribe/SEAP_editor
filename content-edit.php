@@ -17,23 +17,23 @@ $key = filter_input(INPUT_GET,"key",FILTER_SANITIZE_STRING);
 // get question from file
 require_once('error.php');
 
-if (!can_read_file()) { return; }
+if (!can_read_file()) { die; }
 
 $content = file_get_contents($file);
 
-if (!file_has_content($content)) { return; }
+if (!file_has_content($content)) { die; }
 
 $content = json_decode($content);
 
 // Make sure we have valid json content
-if (!is_valid_json()) { return; };
+if (!is_valid_json()) { die; }
 
 //var_dump($content);
 echo '<p>Type: '. $type . '</p>';
 echo '<p>Key: ' . $key . '</p>';
 
 $items = $content->$type;
-$edit_item = null;
+$edit_item = '';
 
 foreach ($items as $item) {
    $item_key = key($item);  
@@ -43,12 +43,9 @@ foreach ($items as $item) {
 }
 
 // If we haven't found the item
-if (!$edit_item) { 
-  $msg = 'Sorry your selection was not found in the ' . $type . ' section of ' . $_SESSION['file'] . '. ';
-  echo _error_html($msg, '/', 'Please go back and choose another');  
-}
+if (!is_valid_item($edit_item, $type)) { die; }
 
-var_dump($edit_item);
+//var_dump($edit_item);
 
 ?>
 
