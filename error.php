@@ -9,7 +9,8 @@ function can_read_file() {
   ini_set('display_errors', 1);
 
   if (ini_get('allow_url_fopen') == 0) {
-    echo '<p class="error">Error with php setup: fopen is not allowed on this host.</p>';
+    echo _error_html('Error with php setup: fopen is not allowed on this host', '/', 'Go Back');
+    $_SESSION['file'] = '';
     return false;
   }
   // No errors all good.
@@ -21,7 +22,8 @@ function can_read_file() {
  */
 function file_has_content($content) {
   if ($content === '') {
-    echo '<p class="error">No file selected or file has no content</p>';
+    echo _error_html('No file selected or file has no content', '/', 'Go Back');
+    $_SESSION['file'] = '';
     return false;
   }
   return true;
@@ -38,10 +40,25 @@ function is_valid_json() {
       JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
       JSON_ERROR_SYNTAX => 'Syntax error', 
     );
-    echo '<p class="error">Error reading JSON: ' . ($json_errors[json_last_error()]) . '</p>';
-    echo '<p class="error">Please check that your document is correctly formated JSON. This might help: http://jsonlint.com</p>';
+    $msg = 'Error reading JSON: ' . ($json_errors[json_last_error()]);
+    echo _error_html($msg);
+    $msg = 'Please check that your document is correctly formated JSON. This might help: http://jsonlint.com';
+    echo _error_html($msg);
+    echo _error_html('Try another file?', '/', 'Go Back');
+    $_SESSION['file'] = '';
     return false;
   }
   // No errors all good.
   return true;
+}
+
+/**
+ * Create formatted error message with link to index.
+ */
+function _error_html($msg, $link=null, $linktext='') {
+  $html  = '<p class="error">' . $msg . '</p>';
+  if ($link) {
+    $html .= '<p class="error"><a href="' . $link . '">'. $linktext . '</p>';
+  }
+  return $html;
 }

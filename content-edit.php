@@ -7,11 +7,29 @@
 
 include("includes/header.php");
 
-// get file from session?
-$file = 'my file name';
+// get file path
+$file = 'files/' . $_SESSION['file'];
+
 // get item from params
 $type = filter_input(INPUT_GET,"type",FILTER_SANITIZE_STRING);
 $key = filter_input(INPUT_GET,"key",FILTER_SANITIZE_STRING);
+
+// get question from file
+require_once('error.php');
+
+if (!can_read_file()) { return; }
+
+$content = file_get_contents($file);
+
+if (!file_has_content($content)) { return; }
+
+$content = json_decode($content);
+
+// Make sure we have valid json content
+if (!is_valid_json()) { return; };
+
+var_dump($content);
+
 ?>
 
 <h1>JSON Item Editor</h1>
