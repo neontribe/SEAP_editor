@@ -18,6 +18,9 @@ $exclude = array('.', '..', 'README.md');
 $allfiles = scandir($dir);
 $files = array_diff($allfiles, $exclude);
 
+$session_file = '';
+if (isset($_SESSION['file'])) { $session_file = $_SESSION['file']; }
+
 function set_selected($file, $session_file) {
   if ($file == $session_file) {
     return ' checked';
@@ -31,7 +34,7 @@ function set_selected($file, $session_file) {
   <div class="radio-list">
     <? foreach ($files as $file): ?>
     <label>
-      <input type="radio" name="select_file" value="<?= $file ?>" <?= set_selected($file, $_SESSION['file']); ?>>
+      <input type="radio" name="select_file" value="<?= $file ?>" <?= set_selected($file, $session_file); ?>>
       <span><?=$file?></span>
     </label>
     <? endforeach; ?>
