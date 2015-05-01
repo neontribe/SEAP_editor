@@ -39,4 +39,4 @@ function set_selected($file, $session_file) {
 <div id="content">
   Please select a file to edit.
 </div>
-<?php include("includes/footer.html"); ?>
+<?php include("includes/footer.php"); 

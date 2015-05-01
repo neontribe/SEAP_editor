@@ -31,3 +31,4 @@ if (!is_valid_json()) { return; };
     <? endforeach; ?>
   </ul>
 <?php endforeach; ?>
+<?php include('includes/footer.php'); ?>

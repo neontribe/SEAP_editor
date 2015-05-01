@@ -1,5 +1,6 @@
-body *+* {
-  margin-top: 0.5em;
+main {
+  text-align: left;
+  padding: 50px;
 }
 
 .error {

@@ -28,7 +28,27 @@ $content = json_decode($content);
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
 
-var_dump($content);
+//var_dump($content);
+echo '<p>Type: '. $type . '</p>';
+echo '<p>Key: ' . $key . '</p>';
+
+$items = $content->$type;
+$edit_item = null;
+
+foreach ($items as $item) {
+   $item_key = key($item);  
+   if ($item->$item_key === $key) {
+   $edit_item = $item;
+ }
+}
+
+// If we haven't found the item
+if (!$edit_item) { 
+  $msg = 'Sorry your selection was not found in the ' . $type . ' section of ' . $_SESSION['file'] . '. ';
+  echo _error_html($msg, '/', 'Please go back and choose another');  
+}
+
+var_dump($edit_item);
 
 ?>
 
@@ -41,4 +61,4 @@ var_dump($content);
 <form method="post">
 </form>
 <!-- TODO add ajax preview? -->
-<?php include("includes/footer.html"); ?>
+<?php include("includes/footer.php"); ?>

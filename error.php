@@ -58,7 +58,7 @@ function is_valid_json() {
 function _error_html($msg, $link=null, $linktext='') {
   $html  = '<p class="error">' . $msg . '</p>';
   if ($link) {
-    $html .= '<p class="error"><a href="' . $link . '">'. $linktext . '</p>';
+    $html .= '<p class="error"><a href="' . $link . '">'. $linktext . '</a></p>';
   }
   return $html;
 }
