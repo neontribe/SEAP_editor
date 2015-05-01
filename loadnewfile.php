@@ -5,10 +5,6 @@
  *
  */
 session_start();
-if (isset($_SESSION) && $_SESSION['file']) {
-  unset($_SESSION['file']);
-}
-session_destroy();
-
-header('Location: ' . '/');
-die();
+unset($_SESSION['file']);
+header('Location: index.php');
+exit;

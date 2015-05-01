@@ -5,7 +5,9 @@
  *
  */
 
-include("includes/header.html");
+include("includes/header.php");
+
+//$_SESSION['file'] = $_POST['select_file'];
 
 // The directory where the editable files live.
 $dir = 'files';
@@ -16,13 +18,6 @@ $exclude = array('.', '..', 'README.md');
 $allfiles = scandir($dir);
 $files = array_diff($allfiles, $exclude);
 
-// If session already started and has current file. Select as default.
-session_start();
-$session_file = '';
-if (isset($_SESSION) && isset($_SESSION['file'])) {
-  $session_file = $_SESSION['file'];
-}
-
 function set_selected($file, $session_file) {
   if ($file == $session_file) {
     return ' selected="selected"';
@@ -32,13 +27,14 @@ function set_selected($file, $session_file) {
 
 ?>
 <h1>JSON Content Editor</h1>
-<form method="post">
+<form method="post" action="content.php">
   <select id="edit-this-file" name="select_file">
       <option value="">Please select a file</option>
     <? foreach ($files as $file): ?>
-      <option value="<?= $file ?>" <?= set_selected($file, $session_file); ?>><?= $file ?></option>
+      <option value="<?= $file ?>" <?= set_selected($file, $_SESSION['file']); ?>><?= $file ?></option>
     <? endforeach; ?>
   </select>
+  <input type="submit" value="Edit file">
 </form>
 <div id="content">
   Please select a file to edit.
