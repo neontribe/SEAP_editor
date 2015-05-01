@@ -20,7 +20,7 @@ $files = array_diff($allfiles, $exclude);
 
 function set_selected($file, $session_file) {
   if ($file == $session_file) {
-    return ' selected="selected"';
+    return ' checked';
   }
   return ''; 
 }
@@ -28,13 +28,15 @@ function set_selected($file, $session_file) {
 ?>
 <h1>JSON Content Editor</h1>
 <form method="post" action="content.php">
-  <select id="edit-this-file" name="select_file">
-      <option value="">Please select a file</option>
+  <div class="radio-list">
     <? foreach ($files as $file): ?>
-      <option value="<?= $file ?>" <?= set_selected($file, $_SESSION['file']); ?>><?= $file ?></option>
+    <label>
+      <input type="radio" name="select_file" value="<?= $file ?>" <?= set_selected($file, $_SESSION['file']); ?>>
+      <span><?=$file?></span>
+    </label>
     <? endforeach; ?>
-  </select>
-  <button type="submit">Edit file</button>
+  </div>
+  <button type="submit" class="nav-link">Go to file</button>
 </form>
 <div id="content">
   Please select a file to edit.
