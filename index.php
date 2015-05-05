@@ -28,7 +28,7 @@ function set_selected($file, $session_file) {
 
 ?>
 <h1>JSON Content Editor</h1>
-<form method="post" action="content.php">
+<form id="file-select-form" method="post" action="content.php">
   <div class="radio-list">
     <? foreach ($files as $file): ?>
     <label>
@@ -42,4 +42,17 @@ function set_selected($file, $session_file) {
 <div id="content">
   Please select a file to edit.
 </div>
+
+<!-- If there is a session file go straight to content.php -->
+<?php if ($session_file !==''): ?>
+  <script type="text/javascript">
+    //Our form submission function.
+    function submitForm() {
+      document.getElementById('file-select-form').submit();
+    }
+    //Call the function submitForm() as soon as the page has loaded.
+    window.onload = submitForm;
+  </script>
+<?php endif; ?>
+
 <?php include("includes/footer.php"); 

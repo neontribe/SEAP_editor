@@ -41,56 +41,7 @@ foreach ($items as $item) {
 // If we haven't found the item
 if (!is_valid_item($edit_item, $type)) { die; }
 
-/**
- *  Make form elements from type
- */
-function make_form_element($fieldtype, $fieldname, $fieldvalue) {
-  switch($fieldtype) {
-    case 'string':
-      if (strlen($fieldvalue) > 100) {
-        return '<label>' . $fieldname . '</label><textarea name="' . $fieldname . '" value="' . $fieldvalue . '" rows="3" cols="100">' . $fieldvalue . '</textarea>';
-      } else {
-        return '<label>' . $fieldname . '</label><input type="text" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
-      }
-    break;
-    case 'integer':
-	    return '<label>'.$fieldname.'</label><input type="number" value="' . $fieldvalue . '">';
-    break;
-    case 'boolean':
-	    return 'I am a boolean';
-    break;
-    case 'double':
-	    return 'I am a float';
-    break;
-
-    // If an array - treat as set
-    case 'array':
-      $output = '<fieldset><legend>' . $fieldname . '</legend>';
-      foreach ($fieldvalue as $field) {
-        $output .= make_form_element(gettype($field), 'name', $field);
-      }
-	    return $output . '</fieldset>';
-    break;
-
-    // If object - treat as set of fields.
-    case 'object':
-      $output = '<fieldset>';
-      foreach ($fieldvalue as $fieldname => $value) {
-        $output .= make_form_element(gettype($value), $fieldname, $value);
-      }
-	    return $output . '</fieldset>';
-    break;
-    
-    // If null value return as empty textfield.
-    case 'NULL':
-      return make_form_element('string', $fieldname, '');
-    break;
-    case 'resource':
-    default:
-	    return 'No form field available for that type. Please contact developer.';
-    break;
-  }
-}
+require_once('make_item.php');
 
 ?>
 
@@ -102,11 +53,11 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
 editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?></strong>
 
 <div class="options">
-  <a href="/" class="nav-link">choose another question</a> or <a href="loadnewfile.php" class="nav-link">edit another file</a>
+<a href="/" class="nav-link">choose another item</a> or <a href="loadnewfile.php" class="nav-link">edit another file</a>
 </div>
 
-<form method="post">
-<fieldset><legend><h2><?= $key ?></h2></legend>
+<form method="post" action="save_item.php">
+<fieldset name="<?= $type ?>"><legend><h2><?= $key ?></h2></legend>
     <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
     <p class="debug"><?=var_dump($fieldvalue); ?></p>
     <?php $fieldtype = gettype($fieldvalue);?>
@@ -115,6 +66,7 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
     </p>
     <?php endforeach; ?>
   </fieldset>
+  <button type="submit">Save <?= $type ?> item</button>
 </form>
 <!-- TODO add ajax preview? -->
 <?php include("includes/footer.php"); ?>
