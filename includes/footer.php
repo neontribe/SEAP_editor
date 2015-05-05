@@ -1,5 +1,7 @@
-</main>
-</div> <!-- end of page -->
-<footer>&copy; <?=date('Y') ?> Neontribe</footer>
+  </main>
+  </div> <!-- end of page -->
+  <footer>
+    <div>&copy; <?=date('Y') ?> Neontribe</div>
+  </footer>
 </body>
 </html>
