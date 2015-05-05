@@ -14,7 +14,7 @@ define("BRAND", "SEAP");
 </head>
 
 <header role="banner">
-  <span aria-label="<?=BRAND ?> Editor Logo" role="image">
+  <span aria-label="<?=BRAND ?> Editor Logo" role="img">
     <?=BRAND ?> Editor
   </span>
   <nav class="to-main-menu" role="navigation">

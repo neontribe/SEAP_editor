@@ -7,8 +7,6 @@
 
 include("includes/header.php");
 
-//$_SESSION['file'] = $_POST['select_file'];
-
 // The directory where the editable files live.
 $dir = 'files';
 

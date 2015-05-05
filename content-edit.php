@@ -48,7 +48,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
   switch($fieldtype) {
     case 'string':
       if (strlen($fieldvalue) > 100) {$inputtype = 'textarea';} else { $inputtype = 'text'; }
-      return '<label>'.$fieldname.'<label><input type="'.$inputtype.'" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
+      return '<label>'.$fieldname.'</label><input type="'.$inputtype.'" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
     break;
     case 'integer':
 	return 'I am an int';
@@ -82,11 +82,11 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
 <div class="options">
   <a href="/" class="nav-link">choose another question</a> or <a href="loadnewfile.php" class="nav-link">edit another file</a>
 </div>
-<h2><?= $key ?></h2> from section <strong><?= $type ?></strong> in <?= $file ?></h2>
+<h2><?= $key ?></h2> from section <strong><?= $type ?></strong> in <?= $file ?>
 
 <form method="post">
   <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
-  <pre class="debug"><?=var_dump($fieldvalue); ?></pre>
+  <p class="debug"><?=var_dump($fieldvalue); ?></p>
   <?php $fieldtype = gettype($fieldvalue);?>
   <?= make_form_element($fieldtype, $fieldname, $fieldvalue); ?>
   <?php endforeach; ?>
