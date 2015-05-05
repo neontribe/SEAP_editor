@@ -47,31 +47,51 @@ if (!is_valid_item($edit_item, $type)) { die; }
 function make_form_element($fieldtype, $fieldname, $fieldvalue) {
   switch($fieldtype) {
     case 'string':
-      if (strlen($fieldvalue) > 100) {$inputtype = 'textarea';} else { $inputtype = 'text'; }
-      return '<label>'.$fieldname.'</label><input type="'.$inputtype.'" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
+      if (strlen($fieldvalue) > 100) {
+        return '<label>' . $fieldname . '</label><textarea name="' . $fieldname . '" value="' . $fieldvalue . '" rows="3" cols="100">' . $fieldvalue . '</textarea>';
+      } else {
+        return '<label>' . $fieldname . '</label><input type="text" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
+      }
     break;
     case 'integer':
-	return 'I am an int';
+	    return '<label>'.$fieldname.'</label><input type="number" value="' . $fieldvalue . '">';
     break;
     case 'boolean':
-	return 'I am a boolean';
+	    return 'I am a boolean';
     break;
     case 'double':
-	return 'I am a float';
+	    return 'I am a float';
     break;
+
+    // If an array - treat as set
     case 'array':
-	return 'Array - iterate again';
+      $output = '<fieldset><legend>' . $fieldname . '</legend>';
+      foreach ($fieldvalue as $field) {
+        $output .= make_form_element(gettype($field), 'name', $field);
+      }
+	    return $output . '</fieldset>';
     break;
+
+    // If object - treat as set of fields.
     case 'object':
-	return 'Object - no support';
-     break;
-    case 'resource':
+      $output = '<fieldset>';
+      foreach ($fieldvalue as $fieldname => $value) {
+        $output .= make_form_element(gettype($value), $fieldname, $value);
+      }
+	    return $output . '</fieldset>';
+    break;
+    
+    // If null value return as empty textfield.
     case 'NULL':
+      return make_form_element('string', $fieldname, '');
+    break;
+    case 'resource':
     default:
-	return 'No form field available for that type. Please contact developer.';
+	    return 'No form field available for that type. Please contact developer.';
     break;
   }
 }
+
 ?>
 
 <div class="debug">
@@ -79,17 +99,22 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
 </div>
 
 <h1>JSON Item Editor</h1>
+editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?></strong>
+
 <div class="options">
   <a href="/" class="nav-link">choose another question</a> or <a href="loadnewfile.php" class="nav-link">edit another file</a>
 </div>
-<h2><?= $key ?></h2> from section <strong><?= $type ?></strong> in <?= $file ?>
 
 <form method="post">
-  <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
-  <p class="debug"><?=var_dump($fieldvalue); ?></p>
-  <?php $fieldtype = gettype($fieldvalue);?>
-  <?= make_form_element($fieldtype, $fieldname, $fieldvalue); ?>
-  <?php endforeach; ?>
+<fieldset><legend><h2><?= $key ?></h2></legend>
+    <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
+    <p class="debug"><?=var_dump($fieldvalue); ?></p>
+    <?php $fieldtype = gettype($fieldvalue);?>
+    <p>
+      <?= make_form_element($fieldtype, $fieldname, $fieldvalue); ?>
+    </p>
+    <?php endforeach; ?>
+  </fieldset>
 </form>
 <!-- TODO add ajax preview? -->
 <?php include("includes/footer.php"); ?>

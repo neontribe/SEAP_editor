@@ -20,12 +20,18 @@ footer div {
 /** ----- FORMS --------------------------------------- **/
 
 label {
-  margin-right: 10px;
+  margin: 10px;
 }
 
+textarea,
 input {
   font-size: 18px;
+  margin: 10px;
   padding: 6px;
+}
+
+fieldset {
+  padding: 0.75em;
 }
 
 .radio-list [type="radio"] {
@@ -63,7 +69,7 @@ input {
 }
 
 .debug {
-  //display: none;
+  display: none;
   background: #E9E991;
   font-size: small;
 }
