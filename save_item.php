@@ -14,26 +14,46 @@ if(!$_POST) {
 $postjson = array();
 
 foreach($_POST as $key => $value) {
-  // nest fieldsets into arrays/ objects
   // strip formfield nums for clean json
   $key = explode('_', $key)[0];
-     
-  //remove leading and trailing spaces      
-  $postjson[$key] = trim($value);
-  //set empty string to null 
-  if (trim($value) === '') {
-    $postjson[$key] = null;
-  }
+    
+  // nest fieldsets into arrays/ objects
+  if (is_object($value) || is_array($value)) {
+    $fieldset_values = array();
+    echo '<pre>'; print_r($value); echo '</pre>';
+    die;
+    foreach ($value as $val) {
+      $postjson[$key][] = $val;
+    }
+    $test = array('questions' => array(array('label' => 'hello', 'value' => 'hidid'), array('label'=> 'hi', 'value' => 'hididi')));
+    echo '<pre>';
+    print_r($test);
+    echo '</pre>';
+    $json = json_encode($test);
+    echo '<pre>JSON******'. $json .'</pre>';;
+  } else {
 
-  //TODO save the values into form.
-  //TODO success message.
-  // TODO possible not straight to index... 
-  // your question has been saved as PREVIEW
-  //  Edit it again
-  //  chose another question
-  //  chose another file     
+    // clean and trim 
+    $postjson[$key] = _clean_value($value);
+
+    //TODO save the values into form.
+    //TODO success message.
+    // TODO possible not straight to index... 
+    // your question has been saved as PREVIEW
+    //  Edit it again
+  }
 }
-  
+
+function _clean_value($value) {
+  // remove leading and trailing spaces
+  $value = trim($value);
+  // set empty string to null
+  if ($value === '') {
+    $value = null;
+  }
+  return $value;
+}
+
 var_dump($_POST);
 print '<p>==================</p>';
 var_dump($postjson);
