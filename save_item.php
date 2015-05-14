@@ -11,7 +11,15 @@ if(!$_POST) {
   echo 'Oops no form data submitted';
 }
 
-//foreach($_POST as $key => $value) {
+foreach($_POST as $key => $value) {
+  //remove leading and trailing spaces      
+  $_POST[$key] = trim($value);
+  //set empty string to null 
+  if (trim($value) === '') {
+    $_POST[$key] = null;
+    echo $value . 'null';
+  }
+
   //TODO save the values into form.
   //TODO success message.
   // TODO possible not straight to index... 
@@ -19,11 +27,11 @@ if(!$_POST) {
   //  Edit it again
   //  chose another question
   //  chose another file     
-
+}
   
   var_dump($_POST);
-  // TODO reformat $_POST values to group into arrays byt fieldset
-  $contents = json_encode($_POST);
+  // convert num strings to int using JSON encode option 
+  $contents = utf8_encode(json_encode($_POST, JSON_NUMERIC_CHECK));
   file_put_contents( 'files/new-question.json', $contents);
-  //headder('Location: /');
+  //header('Location: /');
 //}
