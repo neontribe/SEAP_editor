@@ -11,13 +11,18 @@ if(!$_POST) {
   echo 'Oops no form data submitted';
 }
 
+$postjson = array();
+
 foreach($_POST as $key => $value) {
+  // nest fieldsets into arrays/ objects
+  // strip formfield nums for clean json
+  $key = explode('_', $key)[0];
+     
   //remove leading and trailing spaces      
-  $_POST[$key] = trim($value);
+  $postjson[$key] = trim($value);
   //set empty string to null 
   if (trim($value) === '') {
-    $_POST[$key] = null;
-    echo $value . 'null';
+    $postjson[$key] = null;
   }
 
   //TODO save the values into form.
@@ -29,9 +34,11 @@ foreach($_POST as $key => $value) {
   //  chose another file     
 }
   
-  var_dump($_POST);
+var_dump($_POST);
+print '<p>==================</p>';
+var_dump($postjson);
   // convert num strings to int using JSON encode option 
-  $contents = utf8_encode(json_encode($_POST, JSON_NUMERIC_CHECK));
+  $contents = utf8_encode(json_encode($postjson, JSON_NUMERIC_CHECK));
   file_put_contents( 'files/new-question.json', $contents);
   //header('Location: /');
 //}
