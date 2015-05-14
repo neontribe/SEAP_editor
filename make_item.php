@@ -7,11 +7,16 @@
 /**
  *  Make form elements from JSON by type.
  */
-function make_form_element($fieldtype, $fieldname, $fieldvalue, $groupnum=0) {  
+function make_form_element($fieldtype, $fieldname, $fieldvalue) {  
   // Append _randomnum to $fieldname for unique field names.
   $formfieldname = $fieldname . '_' . mt_rand(100000000, 999999999);
   // In case of obj or array, disgard array notation from name for label
-  $formfieldlabel = explode('[', $fieldname)[0];
+  $fieldname_arr = explode('[', $fieldname);
+  if (sizeof($fieldname_arr > 2)) {
+    $formfieldlabel = trim(end($fieldname_arr),']');
+  } else {
+    $formfieldlabel = $fieldname_arr[0];
+  }
   switch($fieldtype) {
     case 'string':
       if (strlen($fieldvalue) > 100) {
@@ -43,14 +48,11 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue, $groupnum=0) {
 
     // If object - treat as set of fields.
     case 'object':
-      if(!$groupnum) {$groupnum = 0;}
       $output = '<fieldset name="' . $fieldname . '_obj">';
       foreach ($fieldvalue as $subfieldname => $value) {
-        $fieldsetfieldname = $fieldname . '['.$groupnum.'][' . $subfieldname . ']';  
-        $output .= make_form_element(gettype($value), $fieldsetfieldname, $value, $groupnum);
+        $fieldsetfieldname = $fieldname . '[][' . $subfieldname . ']';  
+        $output .= make_form_element(gettype($value), $fieldsetfieldname, $value);
       }
-      $groupnum++;
-      error_log($groupnum);
       return $output . '</fieldset>';
     break;
 
