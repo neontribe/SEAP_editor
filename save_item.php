@@ -21,6 +21,9 @@ foreach($_POST as $key => $value) {
   if (is_object($value) || is_array($value)) {
     $fieldset_values = array();
     foreach ($value as $val) {
+      foreach ($val as  $k => $v) {
+        $val[$k] = _clean_value($v);
+      }
       $postjson[$key][] = $val;
     }
   } else {
@@ -28,7 +31,9 @@ foreach($_POST as $key => $value) {
     // clean and trim 
     $postjson[$key] = _clean_value($value);
 
-    //TODO save the values into form.
+    // save the values into file.
+
+
     //TODO success message.
     // TODO possible not straight to index... 
     // your question has been saved as PREVIEW
