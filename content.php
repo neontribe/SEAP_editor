@@ -7,7 +7,7 @@ if (!can_read_file()) { return; }
 if (!isset($_POST['select_file'])) { return; }
 
 $filename = $_POST['select_file'];
-$file = BASE . '/files/' . $filename;
+$file = 'files/' . $filename;
 $_SESSION['file'] = $filename;
 
 $content = file_get_contents($file);
@@ -17,10 +17,12 @@ if (!file_has_content($content)) { return; }
 $content = json_decode($content);
 
 // Make sure we have valid json content
-if (!is_valid_json()) { return; };
+if (!is_valid_json()) { return; }
+
+$title_arr = explode('.', $filename);
 ?>
 
-<h1><?= explode('.', $filename)[0]; ?></h1>
+<h1><?= $title_arr[0]; ?></h1>
 
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
