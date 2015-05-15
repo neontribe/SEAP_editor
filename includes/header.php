@@ -30,8 +30,8 @@ function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="<?=BASE ?>/css/style.css" rel="stylesheet" media="all" />
-<link href="<?=BASE ?>/css/seap-style.css" rel="stylesheet" media="all" />
+<link href="<?=BASE ?>css/style.css" rel="stylesheet" media="all" />
+<link href="<?=BASE ?>css/seap-style.css" rel="stylesheet" media="all" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,300" rel="stylesheet" type="text/css" media="none" onload="if(media!='all')media='all'">
 <title>JSON content editor - SEAP</title>
 </head>
@@ -43,10 +43,10 @@ function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   <nav class="to-main-menu" role="navigation">
     <ul>
       <li>
-      <a href="<?=BASE ?>/loadnewfile.php">File chooser</a>
+      <a href="<?=BASE ?>loadnewfile.php">File chooser</a>
       </li>
       <li>
-      <a href="<?=BASE ?>/help.php">Help</a>
+      <a href="<?=BASE ?>help.php">Help</a>
       </li>
     </ul>
   </nav>

@@ -4,6 +4,7 @@
  * drop session and start again with new file
  *
  */
-session_start();
+include('includes/header.php');
+
 $_SESSION['file'] = '';
-header('Location: /');
+header('Location: ' . BASE);

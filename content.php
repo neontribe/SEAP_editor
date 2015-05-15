@@ -26,7 +26,7 @@ $title_arr = explode('.', $filename);
 
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
-  <form method="post" action="<?=BASE ?>/add_new.php">
+  <form method="post" action="<?=BASE ?>add_new.php">
     <!-- TODO couple of hidden inputs for category and type -->
     <!-- TODO filter by category radios -->
     Click to edit or 
