@@ -13,14 +13,14 @@ if(!$_POST) {
 }
 
 // Get file from session.
-session_start();
-
 if (!can_read_file()) { return; }
 
 if (!isset($_SESSION['file'])) { return; }
 
 $filename = $_SESSION['file'];
 $file = 'files/' . $filename;
+
+if (!can_write_file($filename)) { return; }
 
 $content = file_get_contents($file);
 

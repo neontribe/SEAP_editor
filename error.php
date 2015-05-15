@@ -1,4 +1,5 @@
 <?php
+include('ncludes/header.php');
 
 /**
  * Check if php allow_url_fopen on
@@ -9,7 +10,7 @@ function can_read_file() {
   ini_set('display_errors', 1);
 
   if (ini_get('allow_url_fopen') == 0) {
-    _error_html('Error with php setup: fopen is not allowed on this host', '/', 'Go Back');
+    _error_html('Error with php setup: fopen is not allowed on this host', BASE, 'Go Back');
     $_SESSION['file'] = '';
     return false;
   }
@@ -18,11 +19,21 @@ function can_read_file() {
 }
 
 /**
+ * Check if the file is writeable.
+ */
+function can_write_file($filename) {
+  if (!is_writeable($_SESSION['file'])) {
+    _error_html('File not writeable', BASE, 'Choose another file');
+    return false;
+  }
+}
+
+/**
  *  Check if we have a file and it contains stuff.
  */
 function file_has_content($content) {
   if ($content === '') {
-    _error_html('No file selected or file has no content', '/', 'Go Back');
+    _error_html('No file selected or file has no content', BASE, 'Go Back');
     $_SESSION['file'] = '';
     return false;
   }
@@ -44,7 +55,7 @@ function is_valid_json() {
     _error_html($msg);
     $msg = 'Please check that your document is correctly formated JSON. This might help: http://jsonlint.com';
     _error_html($msg);
-    _error_html('Try another file?', '/', 'Go Back');
+    _error_html('Try another file?', BASE, 'Go Back');
     $_SESSION['file'] = '';
     return false;
   }
@@ -55,7 +66,7 @@ function is_valid_json() {
 function is_valid_item($item, $type) { 
   if (!is_object($item)) {
     $msg = 'Sorry your selection was not found in the ' . $type . ' section of ' . $_SESSION['file'] . '. ';
-    _error_html($msg, '/', 'Please go back and choose another', '/content.php');
+    _error_html($msg, BASE, 'Please go back and choose another', BASE . 'content.php');
     return false;
   }     
   // There is an item... might need another check to see if valid JSON obj

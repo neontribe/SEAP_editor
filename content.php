@@ -10,6 +10,8 @@ $filename = $_POST['select_file'];
 $file = 'files/' . $filename;
 $_SESSION['file'] = $filename;
 
+if (!can_write_file($filename)) { return; }
+
 $content = file_get_contents($file);
 
 if (!file_has_content($content)) { return; }
