@@ -20,17 +20,9 @@ foreach($_POST as $key => $value) {
   // nest fieldsets into arrays/ objects
   if (is_object($value) || is_array($value)) {
     $fieldset_values = array();
-    echo '<pre>'; print_r($value); echo '</pre>';
-    die;
     foreach ($value as $val) {
       $postjson[$key][] = $val;
     }
-    $test = array('questions' => array(array('label' => 'hello', 'value' => 'hidid'), array('label'=> 'hi', 'value' => 'hididi')));
-    echo '<pre>';
-    print_r($test);
-    echo '</pre>';
-    $json = json_encode($test);
-    echo '<pre>JSON******'. $json .'</pre>';;
   } else {
 
     // clean and trim 

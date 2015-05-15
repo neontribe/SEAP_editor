@@ -49,11 +49,11 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
     // If object - treat as set of fields.
     case 'object':
       $output = '<fieldset name="' . $fieldname . '_obj">';
-      for ($i = 0; $i < (sizeof(get_object_vars($fieldvalue))); $i++) {
-	echo '+++++++'; print_r(get_object_vars($fieldvalue)); echo '**************';
-        $subfieldname = key($fieldvalue);
-        $value = $fieldvalue->$subfieldname;
-        $fieldsetfieldname = $fieldname . '['.$i.'][' . $subfieldname . ']';  
+      // TODO this should really be incremental value - what scope to store it in?
+      $i = mt_rand(100, 999);
+      $value_arr = get_object_vars($fieldvalue);
+      foreach ($value_arr as $key => $value) {
+        $fieldsetfieldname = $fieldname . '['.$i.'][' . $key . ']';  
         $output .= make_form_element(gettype($value), $fieldsetfieldname, $value);
       }
       return $output . '</fieldset>';
