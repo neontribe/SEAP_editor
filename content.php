@@ -7,7 +7,7 @@ if (!can_read_file()) { return; }
 if (!isset($_POST['select_file'])) { return; }
 
 $filename = $_POST['select_file'];
-$file = 'files/' . $filename;
+$file = BASE . '/files/' . $filename;
 $_SESSION['file'] = $filename;
 
 $content = file_get_contents($file);
@@ -24,7 +24,7 @@ if (!is_valid_json()) { return; };
 
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
-  <form method="post" action="add_new.php">
+  <form method="post" action="<?=BASE ?>/add_new.php">
     <!-- TODO couple of hidden inputs for category and type -->
     <!-- TODO filter by category radios -->
     Click to edit or 
@@ -33,7 +33,7 @@ if (!is_valid_json()) { return; };
   <ul>
     <? foreach ($gubbins as $item): ?>
       <?php $title_key = key($item); ?> 
-      <li><a href="content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
+      <li><a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
     <? endforeach; ?>
   </ul>
 <?php endforeach; ?>
