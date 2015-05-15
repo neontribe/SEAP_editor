@@ -24,8 +24,11 @@ function can_read_file() {
 function can_write_file($filename) {
   if (!is_writeable($_SESSION['file'])) {
     _error_html('File not writeable', BASE, 'Choose another file');
+    $_SESSION['file'] = '';
     return false;
   }
+  // No errors all good.
+  return true;
 }
 
 /**
