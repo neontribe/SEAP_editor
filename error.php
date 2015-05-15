@@ -1,5 +1,5 @@
 <?php
-include('ncludes/header.php');
+include('includes/header.php');
 
 /**
  * Check if php allow_url_fopen on
