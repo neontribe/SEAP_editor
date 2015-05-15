@@ -22,7 +22,13 @@ function can_read_file() {
  * Check if the file is writeable.
  */
 function can_write_file($filename) {
-  if (!is_writeable($_SESSION['file'])) {
+  $filepath = 'files/' . $filename;      
+  if (!file_exists($filepath)) {
+    _error_html($filepath . ' not found.', BASE, 'Choose another file');
+    $_SESSION['file'] = '';
+    return false;
+  }      
+  if (!is_writeable($filepath)) {
     _error_html('File not writeable', BASE, 'Choose another file');
     $_SESSION['file'] = '';
     return false;
