@@ -3,7 +3,6 @@
 define("BRAND", "SEAP");
 define("BASE", base_url());
 
-if (!function_exists('base_url')) {
 function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   if (isset($_SERVER['HTTP_HOST'])) {
     $http = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
@@ -23,7 +22,6 @@ function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   }
 
   return $base_url;
-}
 }
 ?>
 <!DOCTYPE html>
