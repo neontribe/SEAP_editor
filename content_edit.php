@@ -66,6 +66,7 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
     </p>
     <?php endforeach; ?>
   </fieldset>
+  <input type="hidden" name="orig_key" value="<?= $key ?>" />
   <button type="submit">Save <?= $type ?> item</button>
 </form>
 <!-- TODO add ajax preview? -->

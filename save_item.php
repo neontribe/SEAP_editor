@@ -33,35 +33,50 @@ if (!is_valid_json()) { return; };
 // Process $_POST data to output for correct JSON format
 $postjson = array();
 foreach($_POST as $key => $value) {
-  // strip formfield nums for clean json
-  $key = explode('_', $key)[0];
-    
-  // nest fieldsets into arrays/ objects
-  if (is_object($value) || is_array($value)) {
-    $fieldset_values = array();
-    foreach ($value as $val) {
-      foreach ($val as  $k => $v) {
-        $val[$k] = _clean_value($v);
+  // if this is not the original key data - add to postjson.    
+  if ($key !== 'orig_key') {
+    // strip formfield nums for clean json
+    $key = explode('_', $key)[0];
+  
+    // nest fieldsets into arrays/ objects
+    if (is_object($value) || is_array($value)) {
+      $fieldset_values = array();
+      foreach ($value as $val) {
+        foreach ($val as  $k => $v) {
+          $val[$k] = _clean_value($v);
+        }
+        $postjson[$key][] = $val;
       }
-      $postjson[$key][] = $val;
+    } else {
+      // clean and trim 
+      $postjson[$key] = _clean_value($value);
     }
-  } else {
-    // clean and trim 
-    $postjson[$key] = _clean_value($value);
   }
 }
 
 // save the values into file.
-// convert num strings to int using JSON encode option 
-$contents = utf8_encode(json_encode($postjson, JSON_NUMERIC_CHECK));
+$content_arr = array();
+foreach ($content as $type => $gubbins) {
+  $i = 0;
+  $content_arr = $content->$type; 
+  foreach ($gubbins as $item) {
+    $title_key = key($item);
+    if ($item->$title_key === $_POST['orig_key']) {
+       $content_arr[$i] = $postjson;
+    }
+    $i++;
+  }
+  $content->$type = $content_arr;
+}
 
-// file_put_contents( 'files/new-question.json', $contents);
+// convert num strings to int using JSON encode option
+$json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
+file_put_contents($file, $json_data);
+
 $msg = 'Item has been saved.';
 _error_html($msg, '/', 'chose another item', $_SERVER['HTTP_REFERER']);
 
-//TODO success message.
 // TODO possible not straight to index... 
-// your question has been saved as PREVIEW
 //  Edit it again
 
 
