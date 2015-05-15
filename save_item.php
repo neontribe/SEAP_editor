@@ -37,7 +37,8 @@ foreach($_POST as $key => $value) {
   // if this is not the original key data - add to postjson.    
   if ($key !== 'orig_key') {
     // strip formfield nums for clean json
-    $key = explode('_', $key)[0];
+    $key_arr = explode('_', $key);      
+    $key = $key_arr[0];
   
     // nest fieldsets into arrays/ objects
     if (is_object($value) || is_array($value)) {
