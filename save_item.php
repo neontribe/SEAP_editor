@@ -76,7 +76,7 @@ $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
 file_put_contents($file, $json_data);
 
 $msg = 'Item has been saved.';
-_error_html($msg, BASE, 'chose another item', $_SERVER['HTTP_REFERER']);
+_error_html($msg, BASE, 'chose another item', $_SERVER['HTTP_REFERER'], true);
 
 // TODO possible not straight to index... 
 //  Edit it again
