@@ -31,8 +31,7 @@ $title_arr = explode('.', $filename);
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
   <form method="post" action="<?=BASE ?>content_edit.php?type=<?=$type; ?>&key=<?=NEW_ITEM ?>">
-    <!-- TODO filter by category radios -->
-    Click to edit or 
+    Click to edit item or 
     <button type="submit">Add a new one</button>
   </form>
   <ul>
@@ -40,7 +39,16 @@ $title_arr = explode('.', $filename);
   <?php if (is_array($gubbins) || is_object($gubbins)): ?>
       <?php foreach ($gubbins as $item): ?>
         <?php $title_key = key($item); ?> 
-        <li><a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
+        <li>
+          <a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?>
+          </a>
+          <?php foreach(explode('|', FILTER_BY) as $filterby): ?>
+            <?php if (isset($item->$filterby)): ?>
+              <span><?= $filterby; ?>: 
+              <?=$item->$filterby; ?></span>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </li>
       <?php endforeach; ?>
     <?php else: ?>
       <li><?= $gubbins;?></li>
