@@ -34,7 +34,7 @@ $edit_item = '';
 require_once('make_item.php');
 
 // if we are creating a new item - provide blank fields using first as tpl.
-if ($key == 'UNTITLED New item') {
+if ($key === NEW_ITEM) {
   $edit_item = $items[0];
   // Make sure we have an object
   if (!is_object($edit_item)) { return; }
