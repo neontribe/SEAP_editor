@@ -42,7 +42,6 @@ foreach ($items as $item) {
 if (!is_valid_item($edit_item, $type)) { die; }
 
 require_once('make_item.php');
-
 ?>
 
 <div class="debug">

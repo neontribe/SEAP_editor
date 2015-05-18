@@ -4,7 +4,10 @@ require_once('error.php');
 
 if (!can_read_file()) { return; }
 
-if (!isset($_POST['select_file'])) { return; }
+if (!isset($_POST['select_file'])) { 
+  _error_html('Please select a file to edit.', null, '', BASE);
+  return;
+}
 
 $filename = $_POST['select_file'];
 $file = 'files/' . $filename;
@@ -25,7 +28,6 @@ $title_arr = explode('.', $filename);
 ?>
 
 <h1><?= $title_arr[0]; ?></h1>
-
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
   <form method="post" action="<?=BASE ?>add_new.php">
@@ -35,10 +37,16 @@ $title_arr = explode('.', $filename);
     <button type="submit">Add a new one</button>
   </form>
   <ul>
-    <? foreach ($gubbins as $item): ?>
-      <?php $title_key = key($item); ?> 
-      <li><a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
-    <? endforeach; ?>
+  <?php // We can only edit data that has values. ?>
+  <?php if (is_array($gubbins) || is_object($gubbins)): ?>
+      <?php foreach ($gubbins as $item): ?>
+        <?php $title_key = key($item); ?> 
+        <li><a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?></a></li>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <li><?= $gubbins;?></li>
+    <?php endif; ?>
   </ul>
+  
 <?php endforeach; ?>
 <?php include('includes/footer.php'); ?>
