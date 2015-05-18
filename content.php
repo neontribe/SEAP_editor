@@ -25,6 +25,20 @@ $content = json_decode($content);
 if (!is_valid_json()) { return; }
 
 $title_arr = explode('.', $filename);
+
+function get_allowed_filters($filter_keys, $items) {
+  $allowed_filters = array();     
+  foreach ($filter_keys as $filter_key) {
+    foreach ($items as $item) {
+      if(isset($item->$filter_key)) {
+        // only get unique values
+        $allowed_filters[$item->$filter_key] = $item->$filter_key;
+      }
+    }
+  }
+  return $allowed_filters;
+}
+
 ?>
 
 <h1><?= $title_arr[0]; ?></h1>
@@ -33,6 +47,16 @@ $title_arr = explode('.', $filename);
   <form method="post" action="<?=BASE ?>content_edit.php?type=<?=$type; ?>&key=<?=NEW_ITEM ?>">
     Click to edit item or 
     <button type="submit">Add a new one</button>
+  </form>
+  <form method="post" action="<?=BASE ?>content.php">
+    Filter by xxxx
+    <?php $filter_strings = get_allowed_filters(explode('|', FILTER_BY), $gubbins); ?>
+    <select>
+      <?php foreach($filter_strings as $filter_value): ?>
+        <option value="<?=$filter_value; ?>"><?=$filter_value; ?></option>
+      <?php endforeach; ?> 
+    </select>
+    <button type="submit">filter</button>
   </form>
   <ul>
   <?php // We can only edit data that has values. ?>
