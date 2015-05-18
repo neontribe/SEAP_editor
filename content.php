@@ -30,8 +30,7 @@ $title_arr = explode('.', $filename);
 <h1><?= $title_arr[0]; ?></h1>
 <?php foreach ($content as $type => $gubbins): ?>
   <h2><?= $type ?></h2>
-  <form method="post" action="<?=BASE ?>add_new.php">
-    <!-- TODO couple of hidden inputs for category and type -->
+  <form method="post" action="<?=BASE ?>content_edit.php?type=<?=$type; ?>&key=UNTITLED New item">
     <!-- TODO filter by category radios -->
     Click to edit or 
     <button type="submit">Add a new one</button>

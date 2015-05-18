@@ -25,18 +25,16 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
         return '<label>' . $formfieldlabel . '</label><input name="'. $formfieldname .'" type="text" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';
       }
     break;
+    case 'double':
     case 'integer':
       return '<label>' . $formfieldlabel . '</label><input name="'. $formfieldname . '" type="text" value="' . $fieldvalue . '">';
       // unfortunately SEAP app mixes int with in same field type so we have to use text here      
       //return '<label>'. $formfieldlabel . '</label><input name="'. $formfieldname . '" type="number" value="' . $fieldvalue . '">';
     break;
     case 'boolean':
+      // TODO this should be a checkbox;
       return 'I am a boolean';
     break;
-    case 'double':
-      return 'I am a float';
-    break;
-
     // If an array - treat as set
     case 'array':
       $output = '<fieldset name="' . $fieldname . '_arr"><legend>' . $fieldname . '</legend>';
@@ -66,6 +64,42 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
     case 'resource':
     default:
       return 'No form field available for that type. Please contact developer.';
+    break;
+  }
+}
+
+function convert_to_empty($fieldtype, $field) {
+  switch($fieldtype) {
+    case 'string':
+      return '';
+    break;
+    case 'integer':
+    case 'double':
+      return 0;
+    break;
+    case 'boolean':
+      return false;
+    break;
+    case 'array':
+      $set = array();
+      foreach ($field as $k => $f) {
+        $empty_obj = $f;
+        foreach ($f as $key => $v) {
+          $empty_obj->$key = '';
+        }
+        $set[$k] = $empty_obj;
+      }
+      return $set;
+    break;
+    case 'object':
+      return 'TODO convert object';
+    break;
+    case 'null':
+      return null;
+    break;
+    case 'resource':
+    default:
+     return '';
     break;
   }
 }
