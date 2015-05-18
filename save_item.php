@@ -34,8 +34,8 @@ if (!is_valid_json()) { return; };
 // Process $_POST data to output for correct JSON format
 $postjson = array();
 foreach($_POST as $key => $value) {
-  // if this is not the original key data - add to postjson.    
-  if ($key !== 'orig_key') {
+  // if this is not the hidden original key or type data - add to postjson.    
+  if ($key !== 'orig_key' && $key !== 'orig_type') {
     // strip formfield nums for clean json
     $key_arr = explode('_', $key);      
     $key = $key_arr[0];
@@ -58,15 +58,27 @@ foreach($_POST as $key => $value) {
 
 // save the values into file.
 $content_arr = array();
+$new_item = false;
 foreach ($content as $type => $gubbins) {
   $i = 0;
   $content_arr = $content->$type; 
+  if ($_POST['orig_key'] === NEW_ITEM && $_POST['orig_type'] === $type) {
+    $new_item = true;
+    $new_item_type = $type;
+  }
   foreach ($gubbins as $item) {
     $title_key = key($item);
+    if ($item->$title_key === null & !$new_item) { _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die; }
     if ($item->$title_key === $_POST['orig_key']) {
        $content_arr[$i] = $postjson;
     }
     $i++;
+  }
+  if ($new_item) {
+    $content_arr[$i] = $postjson;
+    // Keep the title for redirect param after save
+    $new_item_title_key = key($postjson);
+    $new_item_key = $postjson[$new_item_title_key];
   }
   $content->$type = $content_arr;
 }
@@ -76,12 +88,18 @@ $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
 file_put_contents($file, $json_data);
 
 $msg = 'Item has been saved.';
-_error_html($msg, BASE, 'chose another item', $_SERVER['HTTP_REFERER'], true);
+if ($new_item) {
+   // On successful save set orig_key to new title
+   $_POST['orig_key'] = $new_item_key;
+   $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
+  _error_html($msg, null, '', $url, true);
+} else {
+  _error_html($msg, null, '', $_SERVER['HTTP_REFERER'], true);
+}
 
-// TODO possible not straight to index... 
-//  Edit it again
-
-
+/**
+ *  trim and set empty string to null
+ */
 function _clean_value($value) {
   // remove leading and trailing spaces
   $value = trim($value);

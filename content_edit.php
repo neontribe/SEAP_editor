@@ -85,6 +85,7 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
     <?php endforeach; ?>
   </fieldset>
   <input type="hidden" name="orig_key" value="<?= $key ?>" />
+  <input type="hidden" name="orig_type" value="<?= $type ?>" />
   <button type="submit">Save <?= $type ?> item</button>
 </form>
 <!-- TODO add ajax preview? -->
