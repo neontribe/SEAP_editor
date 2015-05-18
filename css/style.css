@@ -52,7 +52,7 @@ fieldset {
 
 .debug,
 .messages {
-  margin: 20px;
+  margin: 40px 20px 20px 20px;
   padding: 10px;
 }
 
@@ -60,12 +60,20 @@ fieldset {
   display: none;
 }
 
+.success,
 .error {
-  background: #e39088;
-  color: #990000;
   font-weight: 700;
   margin: 0;
   padding: 10px;
+}
+
+.success {
+  background: #6FE9BF;
+}
+
+.error {
+  color: #990000;
+  background: #E39088;
 }
 
 .debug {

@@ -2,6 +2,7 @@
 // Globals
 define("BRAND", "SEAP");
 define("BASE", base_url());
+define("NEW_ITEM", "UNTITLED New item");
 
 function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   if (isset($_SERVER['HTTP_HOST'])) {
