@@ -44,7 +44,7 @@ function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   <nav class="to-main-menu" role="navigation">
     <ul>
       <li>
-      <a href="<?=BASE ?>loadnewfile.php">File chooser</a>
+      <a href="<?=BASE ?>load_new_file.php">File chooser</a>
       </li>
       <li>
       <a href="<?=BASE ?>help.php">Help</a>

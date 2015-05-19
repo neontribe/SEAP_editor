@@ -71,7 +71,7 @@ if (!is_valid_item($edit_item, $type)) { die; }
 editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?></strong>
 
 <div class="options">
-<a href="<?=BASE ?>" class="nav-link">choose another item</a> or <a href="<?=BASE ?>loadnewfile.php" class="nav-link">edit another file</a>
+<a href="<?=BASE ?>" class="nav-link">choose another item</a> or <a href="<?=BASE ?>load_new_file.php" class="nav-link">edit another file</a>
 </div>
 
 <form method="post" action="save_item.php">
