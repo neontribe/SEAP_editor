@@ -72,7 +72,7 @@ function is_valid_json() {
 
 function is_valid_item($item, $type) { 
   if (!is_object($item)) {
-     $msg = 'Sorry your selection was not found in the ' . $type . ' section of ' . $_SESSION['file'] . '. ';
+    $msg = 'Sorry your selection was not found in the ' . $type . ' section of ' . $_SESSION['file'] . '. ';
     _error_html($msg, BASE, 'Please go back and choose another', BASE . 'content.php');
     return false;
   }     

@@ -73,7 +73,7 @@ foreach ($content as $type => $gubbins) {
       _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
     }
     if ($item->$title_key === $_POST['orig_key']) {
-      // if the key field has changed, set flag for redirect params later
+      // if the key field has changed, set flag and type for redirect params later
       if ($postjson[$title_key] !== $_POST['orig_key']) {
         $new_key = true;
         $new_item_type = $type;
