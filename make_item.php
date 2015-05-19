@@ -84,8 +84,13 @@ function convert_to_empty($fieldtype, $field) {
       $set = array();
       foreach ($field as $k => $f) {
         $empty_obj = $f;
-        foreach ($f as $key => $v) {
-          $empty_obj->$key = '';
+        if (is_array($f) || is_object($f)) {
+          foreach ($f as $key => $v) {
+            $empty_obj->$key = '';
+          }
+        }
+        else {
+          $empty_obj = '';
         }
         $set[$k] = $empty_obj;
       }
