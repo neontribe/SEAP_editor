@@ -27,3 +27,22 @@ function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
   }
   return $base_url;
 }
+
+/**
+ * Get filters allowed from config and return as array.
+ */
+function get_allowed_filters($items) {
+  $allowed_filters = array();
+  $filter_keys = explode('|', FILTER_BY);      
+  foreach ($filter_keys as $filter_key) {
+    $allowed_filters[$filter_key]['--All--']='';
+    foreach ($items as $item) {
+      if(isset($item->$filter_key)) {
+        // only get unique values
+        $allowed_filters[$filter_key][$item->$filter_key] = $item->$filter_key;
+      }
+    }
+  }
+  return $allowed_filters;
+}
+
