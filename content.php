@@ -25,6 +25,63 @@ $content = json_decode($content);
 if (!is_valid_json()) { return; }
  
 $title_arr = explode('.', $filename);
+
+/**
+ * Get active filter
+ */
+function get_active_filter($filter_name) {
+  $active_filter = isset($_POST[$filter_name]) ? $_POST[$filter_name] : '';
+  return $active_filter;
+}
+
+/**
+ * Match selected with post value
+ */
+function is_selected($selected, $value) {
+  if ($selected === $value) { 
+    return 'selected'; 
+  } else {
+    return '';
+  }
+}
+
+/**
+ * Show only items in filtered content.
+ */
+function in_filtered_content($type, $item) {
+  $key_arr = array();
+  $filter_value = array();
+  $match = false;
+  if (!$_POST) {return true;}
+  // Get item type and filter key from post key
+  foreach($_POST as $post_key => $post_value) {            
+    $key_arr[] = explode('-', $post_key);
+    $filter_value[] = $post_value;
+  }
+  // Remove empty from filter_value array
+  $filter_value = array_filter($filter_value);
+  // Check if the item contains the selected filter value
+  foreach($key_arr as $selected_filter_keys) {
+    if ($selected_filter_keys[0] === 'filter') {
+      $filter_type = $selected_filter_keys[1];
+      $filter_key = $selected_filter_keys[2];
+    } else {
+      // Stop -no filter selected
+      return true;
+    }
+    // Content is the filtered type and has the selected key
+    if ($filter_type === $type && property_exists($item, $filter_key)) { 
+      if (in_array($item->$filter_key, $filter_value)) {
+        $match = true;
+      } 
+    } else {
+     $match = false;
+    }
+  // If all selected
+  if (!$filter_value) { $match = true; }
+  }
+  return $match;
+}
 ?>
 
 <h1><?= $title_arr[0]; ?></h1>
@@ -36,12 +93,13 @@ $title_arr = explode('.', $filename);
   </form>
   <?php $filter_strings = get_allowed_filters($gubbins); ?>
   <?php if($filter_strings): ?> 
-    <form method="post" action="<?=BASE ?>content.php?filter=hello">
+    <form method="post" action="<?=BASE ?>content.php">
     <?php foreach($filter_strings as $filter_key => $values): ?>
+    <?php $selected = get_active_filter($type . '-' . $filter_key); ?>
     <span><?=$filter_key; ?></span>
-      <select>
+    <select name="filter-<?=$type . '-' . $filter_key; ?>">
         <?php foreach($values as $k => $filter_value): ?>
-          <option value="<?=$filter_value; ?>"><?=$k; ?></option>
+          <option value="<?=$filter_value; ?>" <?=is_selected($selected, $filter_value); ?>> <?=$k; ?></option>
         <?php endforeach; ?> 
       </select>
     <?php endforeach; ?>
@@ -53,16 +111,18 @@ $title_arr = explode('.', $filename);
   <?php if (is_array($gubbins) || is_object($gubbins)): ?>
       <?php foreach ($gubbins as $item): ?>
         <?php $title_key = key($item); ?> 
-        <li>
-          <a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?>
-          </a>
-          <?php foreach(explode('|', FILTER_BY) as $filterby): ?>
-            <?php if (isset($item->$filterby)): ?>
-              <span><?= $filterby; ?>: 
-              <?=$item->$filterby; ?></span>
-            <?php endif; ?>
-          <?php endforeach; ?>
-        </li>
+        <?php if(in_filtered_content($type, $item)): ?>
+          <li>
+            <a href="<?=BASE ?>content_edit.php?type=<?=$type;?>&key=<?=$item->$title_key?>"><?= $item->$title_key; ?>
+            </a>
+            <?php foreach(explode('|', FILTER_BY) as $filterby): ?>
+              <?php if (isset($item->$filterby)): ?>
+                <span><?= $filterby; ?>: 
+                <?=$item->$filterby; ?></span>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          </li>
+        <?php endif; ?>
       <?php endforeach; ?>
     <?php else: ?>
       <li><?= $gubbins;?></li>
