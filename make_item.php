@@ -10,6 +10,7 @@
 function make_form_element($fieldtype, $fieldname, $fieldvalue) {  
   // Append _randomnum to $fieldname for unique field names.
   $formfieldname = $fieldname . '_' . mt_rand(100000000, 999999999);
+  
   // In case of obj or array, disgard array notation from name for label
   $fieldname_arr = explode('[', $fieldname);
   if (sizeof($fieldname_arr > 2)) {
@@ -32,8 +33,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       //return '<label>'. $formfieldlabel . '</label><input name="'. $formfieldname . '" type="number" value="' . $fieldvalue . '">';
     break;
     case 'boolean':
-      // TODO this should be a checkbox;
-      return 'I am a boolean';
+      return '<label>' . $formfieldlabel . '</label><input name="' . $formfieldname . '" type="checkbox" value="' . $fieldvalue . '">';
     break;
     // If an array - treat as set
     case 'array':
@@ -43,7 +43,9 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
         $output .= make_form_element(gettype($field), $fieldname, $field);
         $output .= '</p>';
       }
-      return $output . '</fieldset>';
+      $output .= add_delete_item_form();
+      $output .= '</fieldset>';
+      return $output;
     break;
 
     // If object - treat as set of fields.
@@ -70,6 +72,23 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       return 'No form field available for that type. Please contact developer.';
     break;
   }
+}
+
+/**
+ * For fieldsets, a simple form to add new or delete empty.
+ */
+function add_delete_item_form() {
+  $form_markup  = '<form method="post" action="amend_fields.php">';
+  foreach (array('add new', 'delete empty') as $actiontext) {
+    $form_markup .= '<div class="item-edit radio-list"><label>';
+    $form_markup .= '<input type="radio" name="add_delete" value="' . $actiontext . '">';
+    $form_markup .= '<span>' . $actiontext . '</span>';
+    $form_markup .= '</label></div>';
+  }
+  $form_markup .= '<button type="submit">Go</button>';
+  $form_markup .= '<p>Select action and press Go. To clear refresh page.</p>';
+  $form_markup .= '</form>';
+  return $form_markup;
 }
 
 /**
