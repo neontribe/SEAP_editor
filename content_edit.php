@@ -51,7 +51,7 @@ if ($key === NEW_ITEM) {
 } else {
   // Find the item
   foreach ($items as $item) {
-    $item_key = key($item);  
+    $item_key = key($item);
     if ($item->$item_key === $key) {
       $edit_item = $item;
     }

@@ -59,6 +59,7 @@ foreach($_POST as $key => $value) {
 // save the values into file.
 $content_arr = array();
 $new_item = false;
+$new_key = false;
 foreach ($content as $type => $gubbins) {
   $i = 0;
   $content_arr = $content->$type; 
@@ -68,13 +69,20 @@ foreach ($content as $type => $gubbins) {
   }
   foreach ($gubbins as $item) {
     $title_key = key($item);
-    if ($item->$title_key === null & !$new_item) { _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die; }
+    if ($item->$title_key === null && !$new_item) {
+      _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
+    }
     if ($item->$title_key === $_POST['orig_key']) {
-       $content_arr[$i] = $postjson;
+      // if the key field has changed, set flag for redirect params later
+      if ($postjson[$title_key] !== $_POST['orig_key']) {
+        $new_key = true;
+        $new_item_type = $type;
+      }
+      $content_arr[$i] = $postjson;
     }
     $i++;
   }
-  if ($new_item) {
+  if ($new_item || $new_key) {
     $content_arr[$i] = $postjson;
     // Keep the title for redirect param after save
     $new_item_title_key = key($postjson);
@@ -88,7 +96,7 @@ $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
 file_put_contents($file, $json_data);
 
 $msg = 'Item has been saved.';
-if ($new_item) {
+if ($new_item || $new_key) {
    // On successful save set orig_key to new title
    $_POST['orig_key'] = $new_item_key;
    $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
