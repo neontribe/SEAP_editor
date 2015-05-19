@@ -78,7 +78,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
  * For fieldsets, a simple form to add new or delete empty.
  */
 function add_delete_item_form() {
-  $form_markup  = '<form method="post" action="amend_fields.php">';
+  $form_markup  = '';
   foreach (array('add new', 'delete empty') as $actiontext) {
     $form_markup .= '<div class="item-edit radio-list"><label>';
     $form_markup .= '<input type="radio" name="add_delete" value="' . $actiontext . '">';
@@ -87,7 +87,6 @@ function add_delete_item_form() {
   }
   $form_markup .= '<button type="submit">Go</button>';
   $form_markup .= '<p>Select action and press Go. To clear refresh page.</p>';
-  $form_markup .= '</form>';
   return $form_markup;
 }
 
