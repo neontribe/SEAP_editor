@@ -39,7 +39,9 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
     case 'array':
       $output = '<fieldset name="' . $fieldname . '_arr"><legend>' . $fieldname . '</legend>';
       foreach ($fieldvalue as $field) {
+        $output .= '<p>';
         $output .= make_form_element(gettype($field), $fieldname, $field);
+        $output .= '</p>';
       }
       return $output . '</fieldset>';
     break;
@@ -52,7 +54,9 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       $value_arr = get_object_vars($fieldvalue);
       foreach ($value_arr as $key => $value) {
         $fieldsetfieldname = $fieldname . '['.$i.'][' . $key . ']';  
+        $output .= '<p>';
         $output .= make_form_element(gettype($value), $fieldsetfieldname, $value);
+        $output .= '</p>';
       }
       return $output . '</fieldset>';
     break;
@@ -68,6 +72,9 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
   }
 }
 
+/**
+ *  Convert fields to empty for new item of type.
+ */
 function convert_to_empty($fieldtype, $field) {
   switch($fieldtype) {
     case 'string':
