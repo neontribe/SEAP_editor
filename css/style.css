@@ -20,7 +20,10 @@ footer div {
 /** ----- FORMS --------------------------------------- **/
 
 label {
-  margin: 10px;
+  margin: 10px 0;
+}
+
+fieldset label {
   min-width: 80px;
   display: inline-block;
 }
