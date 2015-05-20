@@ -7,7 +7,7 @@
 /**
  *  Make form elements from JSON by type.
  */
-function make_form_element($fieldtype, $fieldname, $fieldvalue) {  
+function make_form_element($fieldtype, $fieldname, $fieldvalue, $novalue=false) {
   // Append _randomnum to $fieldname for unique field names.
   $formfieldname = $fieldname . '_' . mt_rand(100000000, 999999999);
   
@@ -20,6 +20,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
   }
   switch($fieldtype) {
     case 'string':
+      if ($novalue) { $fieldvalue = ''; }      
       if (strlen($fieldvalue) > 80) {
               return '<label>' . $formfieldlabel . '</label><textarea name="' . $formfieldname . '" value="' . $fieldvalue . '" rows="3" cols="100">' . $fieldvalue . '</textarea>';
       } else {
@@ -28,6 +29,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
     break;
     case 'double':
     case 'integer':
+      if ($novalue) { $fieldvalue = ''; }      
       return '<label>' . $formfieldlabel . '</label><input name="'. $formfieldname . '" type="text" value="' . $fieldvalue . '">';
       // unfortunately SEAP app mixes int with in same field type so we have to use text here      
       //return '<label>'. $formfieldlabel . '</label><input name="'. $formfieldname . '" type="number" value="' . $fieldvalue . '">';
@@ -46,7 +48,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
           $output .= make_form_element(gettype($fieldvalue[$i]), $fieldname, $fieldvalue[$i]);
         } else {
           // This is a new empty set
-          $output .= make_form_element(gettype($fieldvalue[$i-1]), $fieldname, $fieldvalue[$i-1]);
+          $output .= make_form_element(gettype($fieldvalue[$i-1]), $fieldname, $fieldvalue[$i-1], true);
         }
         $output .= '</p>';
       }
@@ -63,7 +65,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       foreach ($value_arr as $key => $value) {
         $fieldsetfieldname = $fieldname . '['.$i.'][' . $key . ']';  
         $output .= '<p>';
-        $output .= make_form_element(gettype($value), $fieldsetfieldname, $value);
+        $output .= make_form_element(gettype($value), $fieldsetfieldname, $value, $novalue);
         $output .= '</p>';
       }
       return $output . '</fieldset>';
