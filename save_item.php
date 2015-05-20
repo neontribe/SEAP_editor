@@ -58,33 +58,40 @@ foreach($_POST as $key => $value) {
 
 // save the values into file.
 $content_arr = array();
-$new_item = false;
-$new_key = false;
+$new_item = array(); 
+$new_key = array();
+
 foreach ($content as $type => $gubbins) {
   $i = 0;
-  $content_arr = $content->$type; 
+  $content_arr = $gubbins;
   if ($_POST['orig_key'] === NEW_ITEM && $_POST['orig_type'] === $type) {
-    $new_item = true;
+    $new_item[$type] = true;
     $new_item_type = $type;
   }
   foreach ($gubbins as $item) {
     $title_key = key($item);
-    // TODO move check to earlier - this will break if ANY of the titles are empty - not just the imtem trying to save.
-    if ($item->$title_key === null && !$new_item) {
+    // Posted item is this type, and has no title key value
+    if (array_key_exists($title_key, $postjson) 
+         && empty($postjson[$title_key])) {
       _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
     }
     if ($item->$title_key === $_POST['orig_key']) {
       // if the key field has changed, set flag and type for redirect params later
+      $new_item_type = $type;      
       if ($postjson[$title_key] !== $_POST['orig_key']) {
-        $new_key = true;
-        $new_item_type = $type;
+        $new_key[$type] = true;
+      }
+      else {
+        $new_key[$type] = false;
       }
       $content_arr[$i] = $postjson;
     }
     $i++;
   }
-  if ($new_item || $new_key) {
-    $content_arr[$i] = $postjson;
+  if (!empty($new_item[$type]) || !empty($new_key[$type])) {
+    if (!empty($new_item[$type])) {      
+      $content_arr[$i] = $postjson;
+    }
     // Keep the title for redirect param after save
     $new_item_title_key = key($postjson);
     $new_item_key = $postjson[$new_item_title_key];
@@ -97,7 +104,7 @@ $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
 file_put_contents($file, $json_data);
 
 $msg = 'Item has been saved.';
-if ($new_item || $new_key) {
+if (!empty($new_item[$new_item_type]) || !empty($new_key[$new_item_type])) {
    // On successful save set orig_key to new title
    $_POST['orig_key'] = $new_item_key;
    $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
