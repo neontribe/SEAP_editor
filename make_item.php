@@ -10,6 +10,7 @@
 function make_form_element($fieldtype, $fieldname, $fieldvalue) {  
   // Append _randomnum to $fieldname for unique field names.
   $formfieldname = $fieldname . '_' . mt_rand(100000000, 999999999);
+  
   // In case of obj or array, disgard array notation from name for label
   $fieldname_arr = explode('[', $fieldname);
   if (sizeof($fieldname_arr > 2)) {
@@ -32,18 +33,25 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       //return '<label>'. $formfieldlabel . '</label><input name="'. $formfieldname . '" type="number" value="' . $fieldvalue . '">';
     break;
     case 'boolean':
-      // TODO this should be a checkbox;
-      return 'I am a boolean';
+      return '<label>' . $formfieldlabel . '</label><input name="' . $formfieldname . '" type="checkbox" value="' . $fieldvalue . '">';
     break;
     // If an array - treat as set
     case 'array':
       $output = '<fieldset name="' . $fieldname . '_arr"><legend>' . $fieldname . '</legend>';
-      foreach ($fieldvalue as $field) {
+      // When data has a repeated set of inputs, assume we can add more.
+      // Loop over values, disgard if empty, add an empty set at the end.
+      for ($i=0; $i <= sizeof($fieldvalue); $i++) {
         $output .= '<p>';
-        $output .= make_form_element(gettype($field), $fieldname, $field);
+        if ($i < sizeof($fieldvalue)) {
+          $output .= make_form_element(gettype($fieldvalue[$i]), $fieldname, $fieldvalue[$i]);
+        } else {
+          // This is a new empty set
+          $output .= make_form_element(gettype($fieldvalue[$i-1]), $fieldname, $fieldvalue[$i-1]);
+        }
         $output .= '</p>';
       }
-      return $output . '</fieldset>';
+      $output .= '</fieldset>';
+      return $output;
     break;
 
     // If object - treat as set of fields.
