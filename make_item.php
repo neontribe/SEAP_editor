@@ -20,7 +20,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
   }
   switch($fieldtype) {
     case 'string':
-      if (strlen($fieldvalue) > 100) {
+      if (strlen($fieldvalue) > 80) {
               return '<label>' . $formfieldlabel . '</label><textarea name="' . $formfieldname . '" value="' . $fieldvalue . '" rows="3" cols="100">' . $fieldvalue . '</textarea>';
       } else {
         return '<label>' . $formfieldlabel . '</label><input name="'. $formfieldname .'" type="text" size="' . round(strlen($fieldvalue) * 1.5) . '" value="' . $fieldvalue . '">';

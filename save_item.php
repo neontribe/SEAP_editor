@@ -69,6 +69,7 @@ foreach ($content as $type => $gubbins) {
   }
   foreach ($gubbins as $item) {
     $title_key = key($item);
+    // TODO move check to earlier - this will break if ANY of the titles are empty - not just the imtem trying to save.
     if ($item->$title_key === null && !$new_item) {
       _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
     }
