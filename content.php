@@ -17,7 +17,7 @@ if (!can_write_file($filename)) { return; }
 
 $content = file_get_contents($file);
 
-//if (!file_has_content($content)) { return; }
+if (!file_has_content($content)) { return; }
 
 $content = json_decode($content);
 
