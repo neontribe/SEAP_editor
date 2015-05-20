@@ -42,13 +42,18 @@ foreach($_POST as $key => $value) {
   
     // nest fieldsets into arrays/ objects
     if (is_object($value) || is_array($value)) {
-      $fieldset_values = array();
+      $count = 0;    
       foreach ($value as $val) {
         foreach ($val as  $k => $v) {
           $val[$k] = _clean_value($v);
         }
-        //The set is not empty, save it.
+        //The set is not empty, or it is the only one save it.
         if (_has_values($val)) {
+          $postjson[$key][] = $val;
+          $count++;
+        }
+        if ($count < 1) {
+          // make sure we keep at least one.
           $postjson[$key][] = $val;
         }
       } 
@@ -58,7 +63,6 @@ foreach($_POST as $key => $value) {
     }
   }
 }
-
 // save the values into file.
 $content_arr = array();
 $new_item = array(); 
