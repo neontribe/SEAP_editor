@@ -55,6 +55,7 @@ foreach($_POST as $key => $value) {
         if ($count < 1) {
           // make sure we keep at least one.
           $postjson[$key][] = $val;
+          $count++;
         }
       } 
     } else {
