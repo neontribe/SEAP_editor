@@ -47,8 +47,11 @@ foreach($_POST as $key => $value) {
         foreach ($val as  $k => $v) {
           $val[$k] = _clean_value($v);
         }
-        $postjson[$key][] = $val;
-      }
+        //The set is not empty, save it.
+        if (_has_values($val)) {
+          $postjson[$key][] = $val;
+        }
+      } 
     } else {
       // clean and trim 
       $postjson[$key] = _clean_value($value);
@@ -124,5 +127,17 @@ function _clean_value($value) {
     $value = null;
   }
   return $value;
+}
+
+/**
+ * Check for content in arrays/ objs
+ */
+function _has_values($val) {
+  foreach ($val as $content) {
+    if ($content) {      
+      return true;
+    }
+  }
+  return false;
 }
 
