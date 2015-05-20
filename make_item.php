@@ -48,6 +48,7 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue, $novalue=false) 
           $output .= make_form_element(gettype($fieldvalue[$i]), $fieldname, $fieldvalue[$i]);
         } else {
           // This is a new empty set
+          $output .= 'The field below will only be saved to json if content is added.<br /> If you require another. Please add content and save.';      
           $output .= make_form_element(gettype($fieldvalue[$i-1]), $fieldname, $fieldvalue[$i-1], true);
         }
         $output .= '</p>';
