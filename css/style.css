@@ -44,14 +44,6 @@ fieldset {
   width: 45%;
 }
 
-.item-edit.radio-list {
-  display: inline-block; 
-}
-
-.item-edit.radio-list [type="radio"] +span {
-  width: auto;
-}
-
 @media (max-width: 500px) {
   .radio-list [type="radio"] + span {
     width: 100%;

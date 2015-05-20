@@ -38,12 +38,18 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
     // If an array - treat as set
     case 'array':
       $output = '<fieldset name="' . $fieldname . '_arr"><legend>' . $fieldname . '</legend>';
-      foreach ($fieldvalue as $field) {
+      // When data has a repeated set of inputs, assume we can add more.
+      // Loop over values, disgard if empty, add an empty set at the end.
+      for ($i=0; $i <= sizeof($fieldvalue); $i++) {
         $output .= '<p>';
-        $output .= make_form_element(gettype($field), $fieldname, $field);
+        if ($i < sizeof($fieldvalue)) {
+          $output .= make_form_element(gettype($fieldvalue[$i]), $fieldname, $fieldvalue[$i]);
+        } else {
+          // This is a new empty set
+          $output .= make_form_element(gettype($fieldvalue[$i-1]), $fieldname, $fieldvalue[$i-1]);
+        }
         $output .= '</p>';
       }
-      $output .= add_delete_item_form();
       $output .= '</fieldset>';
       return $output;
     break;
@@ -72,22 +78,6 @@ function make_form_element($fieldtype, $fieldname, $fieldvalue) {
       return 'No form field available for that type. Please contact developer.';
     break;
   }
-}
-
-/**
- * For fieldsets, a simple form to add new or delete empty.
- */
-function add_delete_item_form() {
-  $form_markup  = '';
-  foreach (array('add new', 'delete empty') as $actiontext) {
-    $form_markup .= '<div class="item-edit radio-list"><label>';
-    $form_markup .= '<input type="radio" name="add_delete" value="' . $actiontext . '">';
-    $form_markup .= '<span>' . $actiontext . '</span>';
-    $form_markup .= '</label></div>';
-  }
-  $form_markup .= '<button type="submit">Go</button>';
-  $form_markup .= '<p>Select action and press Go. To clear refresh page.</p>';
-  return $form_markup;
 }
 
 /**
