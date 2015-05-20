@@ -31,11 +31,19 @@ $content = json_decode($content);
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
 
+// Possible actions
+$action = '';
+
+if ($_POST['action'] === 'save') { $action = 'save'; }
+if ($_POST['action'] === 'delete') { $action = 'delete'; }
+
+if (!$action) { return; }
+
 // Process $_POST data to output for correct JSON format
 $postjson = array();
 foreach($_POST as $key => $value) {
-  // if this is not the hidden original key or type data - add to postjson.    
-  if ($key !== 'orig_key' && $key !== 'orig_type') {
+  // if this is not the action button, hidden original key or type data - add to postjson.    
+  if ($key !== 'action' && $key !== 'orig_key' && $key !== 'orig_type') {
     // strip formfield nums for clean json
     $key_arr = explode('_', $key);      
     $key = $key_arr[0];

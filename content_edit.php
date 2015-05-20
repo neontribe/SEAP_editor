@@ -86,7 +86,8 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
   </fieldset>
   <input type="hidden" name="orig_key" value="<?= $key ?>" />
   <input type="hidden" name="orig_type" value="<?= $type ?>" />
-  <button type="submit">Save <?= $type ?> item</button>
+  <button type="submit" name="action" value="save">Save <?= $type ?> item</button>
+  <button type="submit" name="action"  value="delete">Delete <?= $type ?> item</button>
 </form>
 <!-- TODO add ajax preview? -->
 <?php include("includes/footer.php"); ?>
