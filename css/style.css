@@ -21,6 +21,8 @@ footer div {
 
 label {
   margin: 10px;
+  min-width: 80px;
+  display: inline-block;
 }
 
 textarea,
