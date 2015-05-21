@@ -31,11 +31,19 @@ $content = json_decode($content);
 // Make sure we have valid json content
 if (!is_valid_json()) { return; };
 
+// Possible actions
+$action = '';
+
+if ($_POST['action'] === 'save') { $action = 'save'; }
+if ($_POST['action'] === 'delete') { $action = 'delete'; }
+
+if (!$action) { return; }
+
 // Process $_POST data to output for correct JSON format
 $postjson = array();
 foreach($_POST as $key => $value) {
-  // if this is not the hidden original key or type data - add to postjson.    
-  if ($key !== 'orig_key' && $key !== 'orig_type') {
+  // if this is not the action button, hidden original key or type data - add to postjson.    
+  if ($key !== 'action' && $key !== 'orig_key' && $key !== 'orig_type') {
     // strip formfield nums for clean json
     $key_arr = explode('_', $key);      
     $key = $key_arr[0];
@@ -64,6 +72,7 @@ foreach($_POST as $key => $value) {
     }
   }
 }
+
 // save the values into file.
 $content_arr = array();
 $new_item = array(); 
@@ -92,10 +101,17 @@ foreach ($content as $type => $gubbins) {
       else {
         $new_key[$type] = false;
       }
-      $content_arr[$i] = $postjson;
+      if ($action === 'save') {
+        $content_arr[$i] = $postjson;
+      }
+      if ($action === 'delete' ) {
+        unset($content_arr[$i]);
+        $content_arr = array_values($content_arr);
+      }  
     }
     $i++;
   }
+  // If this is a new item or a changed key...
   if (!empty($new_item[$type]) || !empty($new_key[$type])) {
     if (!empty($new_item[$type])) {      
       $content_arr[$i] = $postjson;
@@ -111,14 +127,22 @@ foreach ($content as $type => $gubbins) {
 $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
 file_put_contents($file, $json_data);
 
-$msg = 'Item has been saved.';
-if (!empty($new_item[$new_item_type]) || !empty($new_key[$new_item_type])) {
-   // On successful save set orig_key to new title
-   $_POST['orig_key'] = $new_item_key;
-   $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
-  _error_html($msg, null, '', $url, true);
-} else {
-  _error_html($msg, null, '', $_SERVER['HTTP_REFERER'], true);
+if($action === 'delete') {
+  $msg = 'Item has been deleted'; 
+  _error_html($msg, null, '', BASE . 'content.php', true);
+}
+
+if($action === 'save') {
+  $msg = 'Item has been saved.';
+
+  if (!empty($new_item[$new_item_type]) || !empty($new_key[$new_item_type])) {
+    // On successful save set orig_key to new title
+    $_POST['orig_key'] = $new_item_key;
+    $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
+    _error_html($msg, null, '', $url, true);
+  } else {
+    _error_html($msg, null, '', $_SERVER['HTTP_REFERER'], true);
+  }
 }
 
 /**
