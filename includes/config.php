@@ -4,6 +4,8 @@ define("BRAND", "SEAP");
 define("BASE", base_url());
 define("NEW_ITEM", "UNTITLED New item");
 define("FILTER_BY", implode('|', array('category')));
+define("FILES_DIR", 'files');
+
 
 /**
  *  Get base url.
