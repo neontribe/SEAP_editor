@@ -1,28 +1,18 @@
 <?php
 include('includes/header.php');
-require_once('error.php');
-
-if (!can_read_file()) { return; }
+require_once('JEditError.class.php');
 
 if (!isset($_POST['select_file']) && !isset($_SESSION['file'])) { 
-  _error_html('Please select a file to edit.', null, '', BASE);
+  JEditError::errorMsg('Please select a file to edit.', null, '', BASE);
   return;
 }
  
 $filename = isset($_POST['select_file']) ? $_POST['select_file'] : $_SESSION['file'] ;
-$file = 'files/' . $filename;
+$filepath = 'files/' . $filename;
 $_SESSION['file'] = $filename;
 
-if (!can_write_file($filename)) { return; }
-
-$content = file_get_contents($file);
-
-if (!file_has_content($content)) { return; }
-
-$content = json_decode($content);
-
-// Make sure we have valid json content
-if (!is_valid_json()) { return; }
+$content = JEditError::loadFileContent($filepath);
+if(!$content) { die; }
  
 $title_arr = explode('.', $filename);
 

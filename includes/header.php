@@ -35,17 +35,5 @@ include_once('config.php');
     <?php // Seen these - delete ?>
     <?php $_SESSION['messages'] = ''; ?>
   <?php endif;?></div>
-<div class="debug">
-<pre>
-SESSION
-----------
-<?= var_dump($_SESSION); ?>
-</pre>
-
-<pre>
-POST
-----
-<?= var_dump($_POST);?>
-</pre>
 </div>
 <main>

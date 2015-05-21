@@ -5,7 +5,7 @@
  *
  */
 
-include("includes/header.php");
+include('includes/header.php');
 
 // The directory where the editable files live.
 $dir = 'files';
