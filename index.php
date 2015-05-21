@@ -8,7 +8,7 @@
 include('includes/header.php');
 
 // The directory where the editable files live.
-$dir = 'files';
+$dir =  FILES_DIR;
 
 // Files to exclude.
 $exclude = array('.', '..', 'README.md');
