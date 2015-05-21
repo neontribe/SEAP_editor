@@ -6,30 +6,20 @@
  */
 
 include('includes/header.php');
-require_once('error.php');
-// TODO better error handling
-if(!$_POST) {
-  echo 'Oops no form data submitted';
-}
+require_once('JEditError.class.php');
 
-// Get file from session.
-if (!can_read_file()) { return; }
+if(!$_POST) {
+ $msg = 'Oops no form data submitted';
+ JEditError::errorMsg($msg);
+}
 
 if (!isset($_SESSION['file'])) { return; }
 
 $filename = $_SESSION['file'];
-$file = 'files/' . $filename;
+$filepath = 'files/' . $filename;
 
-if (!can_write_file($filename)) { return; }
-
-$content = file_get_contents($file);
-
-if (!file_has_content($content)) { return; }
-
-$content = json_decode($content);
-
-// Make sure we have valid json content
-if (!is_valid_json()) { return; };
+$content = JEditError::loadFileContent($filepath);
+if(!$content) { die; }
 
 // Possible actions
 $action = '';
@@ -90,7 +80,7 @@ foreach ($content as $type => $gubbins) {
     // Posted item is this type, and has no title key value
     if (array_key_exists($title_key, $postjson) 
          && empty($postjson[$title_key])) {
-      _error_html('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
+      JEditError::errorMsg('Please enter a ' . $title_key . ' value.', null, '', $_SERVER['HTTP_REFERER']); die;
     }
     if ($item->$title_key === $_POST['orig_key']) {
       // if the key field has changed, set flag and type for redirect params later
@@ -125,11 +115,11 @@ foreach ($content as $type => $gubbins) {
 
 // convert num strings to int using JSON encode option
 $json_data = utf8_encode(json_encode($content, JSON_NUMERIC_CHECK));
-file_put_contents($file, $json_data);
+file_put_contents($filepath, $json_data);
 
 if($action === 'delete') {
   $msg = 'Item has been deleted'; 
-  _error_html($msg, null, '', BASE . 'content.php', true);
+  JEditError::errorMsg($msg, null, '', BASE . 'content.php', true);
 }
 
 if($action === 'save') {
@@ -139,9 +129,9 @@ if($action === 'save') {
     // On successful save set orig_key to new title
     $_POST['orig_key'] = $new_item_key;
     $url = BASE . 'content_edit.php?type=' . $new_item_type . '&key=' .$new_item_key;
-    _error_html($msg, null, '', $url, true);
+    JEditError::errorMsg($msg, null, '', $url, true);
   } else {
-    _error_html($msg, null, '', $_SERVER['HTTP_REFERER'], true);
+    JEditError::errorMsg($msg, null, '', $_SERVER['HTTP_REFERER'], true);
   }
 }
 
