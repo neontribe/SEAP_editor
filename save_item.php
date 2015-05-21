@@ -16,7 +16,7 @@ if(!$_POST) {
 if (!isset($_SESSION['file'])) { return; }
 
 $filename = $_SESSION['file'];
-$filepath = FILES_DIR . $filename;
+$filepath = FILES_DIR . '/' . $filename;
 
 $content = JEditError::loadFileContent($filepath);
 if(!$content) { die; }

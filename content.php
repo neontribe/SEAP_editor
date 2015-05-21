@@ -8,7 +8,7 @@ if (!isset($_POST['select_file']) && !isset($_SESSION['file'])) {
 }
  
 $filename = isset($_POST['select_file']) ? $_POST['select_file'] : $_SESSION['file'] ;
-$filepath = FILES_DIR . $filename;
+$filepath = FILES_DIR . '/' . $filename;
 $_SESSION['file'] = $filename;
 
 $content = JEditError::loadFileContent($filepath);
