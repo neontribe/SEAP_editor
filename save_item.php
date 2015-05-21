@@ -29,6 +29,8 @@ if ($_POST['action'] === 'delete') { $action = 'delete'; }
 
 if (!$action) { return; }
 
+require_once('JEditItem.class.php');
+
 // Process $_POST data to output for correct JSON format
 $postjson = array();
 foreach($_POST as $key => $value) {
@@ -43,10 +45,10 @@ foreach($_POST as $key => $value) {
       $count = 0;    
       foreach ($value as $val) {
         foreach ($val as  $k => $v) {
-          $val[$k] = _clean_value($v);
+          $val[$k] = JEditItem::cleanValue($v);
         }
         //The set is not empty, or it is the only one save it.
-        if (_has_values($val)) {
+        if (JEditItem::hasValues($val)) {
           $postjson[$key][] = $val;
           $count++;
         }
@@ -58,7 +60,7 @@ foreach($_POST as $key => $value) {
       } 
     } else {
       // clean and trim 
-      $postjson[$key] = _clean_value($value);
+      $postjson[$key] = JEditItem::cleanValue($value);
     }
   }
 }
@@ -134,29 +136,3 @@ if($action === 'save') {
     JEditError::errorMsg($msg, null, '', $_SERVER['HTTP_REFERER'], true);
   }
 }
-
-/**
- *  trim and set empty string to null
- */
-function _clean_value($value) {
-  // remove leading and trailing spaces
-  $value = trim($value);
-  // set empty string to null
-  if ($value === '') {
-    $value = null;
-  }
-  return $value;
-}
-
-/**
- * Check for content in arrays/ objs
- */
-function _has_values($val) {
-  foreach ($val as $content) {
-    if ($content) {      
-      return true;
-    }
-  }
-  return false;
-}
-
