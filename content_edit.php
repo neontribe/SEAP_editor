@@ -87,7 +87,7 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
   <input type="hidden" name="orig_key" value="<?= $key ?>" />
   <input type="hidden" name="orig_type" value="<?= $type ?>" />
   <button type="submit" name="action" value="save">Save <?= $type ?> item</button>
-  <button type="submit" name="action"  value="delete">Delete <?= $type ?> item</button>
+  <button type="submit" name="action"  value="delete" onClick="return confirm('Are you sure you want to delete?')">Delete <?= $type ?> item</button>
 </form>
 <!-- TODO add ajax preview? -->
 <?php include("includes/footer.php"); ?>
