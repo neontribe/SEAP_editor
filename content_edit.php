@@ -5,28 +5,20 @@
  *
  */
 
-include("includes/header.php");
+include('includes/header.php');
+require_once('JEditError.class.php');
 
 // get file path
-$file = 'files/' . $_SESSION['file'];
+$filepath = 'files/' . $_SESSION['file'];
 
 // get item from params
 $type = filter_input(INPUT_GET,"type",FILTER_SANITIZE_STRING);
 $key = filter_input(INPUT_GET,"key",FILTER_SANITIZE_STRING);
 
-// get question from file
-require_once('error.php');
+// load file content and find item
+$content = JEditError::loadFileContent($filepath);
 
-if (!can_read_file()) { die; }
-
-$content = file_get_contents($file);
-
-if (!file_has_content($content)) { die; }
-
-$content = json_decode($content);
-
-// Make sure we have valid json content
-if (!is_valid_json()) { die; }
+if (!$content) { die; }
 
 $items = $content->$type;
 $edit_item = '';
@@ -59,16 +51,12 @@ if ($key === NEW_ITEM) {
 }
 
 // If we haven't found the item
-if (!is_valid_item($edit_item, $type)) { die; }
+if (!JEditError::isValidItem($edit_item, $type)) { die; }
 
 ?>
 
-<div class="debug">
-  <?= var_dump($edit_item); ?>
-</div>
-
 <h1>JSON Item Editor</h1>
-editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?></strong>
+editing item from section <strong><?= $type ?></strong> in <strong><?= $filepath ?></strong>
 
 <div class="options">
 <a href="<?=BASE ?>" class="nav-link">choose another item</a> or <a href="<?=BASE ?>load_new_file.php" class="nav-link">edit another file</a>
@@ -77,7 +65,6 @@ editing item from section <strong><?= $type ?></strong> in <strong><?= $file ?><
 <form method="post" action="save_item.php">
 <fieldset name="<?= $type ?>"><legend><h2><?= $key ?></h2></legend>
     <?php foreach($edit_item as $fieldname => $fieldvalue): ?>
-    <p class="debug"><?=var_dump($fieldvalue); ?></p>
     <?php $fieldtype = gettype($fieldvalue);?>
     <p>
       <?= make_form_element($fieldtype, $fieldname, $fieldvalue); ?>
