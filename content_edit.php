@@ -9,7 +9,7 @@ include('includes/header.php');
 require_once('JEditError.class.php');
 
 // get file path
-$filepath = 'files/' . $_SESSION['file'];
+$filepath = FILES_DIR . '/' . $_SESSION['file'];
 
 // get item from params
 $type = filter_input(INPUT_GET,"type",FILTER_SANITIZE_STRING);
