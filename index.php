@@ -5,7 +5,7 @@
  *
  */
 
-include('includes/header.php');
+include('views/includes/header.php');
 
 // The directory where the editable files live.
 $dir =  FILES_DIR;
@@ -28,7 +28,7 @@ function set_selected($file, $session_file) {
 
 ?>
 <h1>JSON Content Editor</h1>
-<form id="file-select-form" method="post" action="content.php">
+<form id="file-select-form" method="post" action="views/content.php">
   <div class="radio-list">
     <? foreach ($files as $file): ?>
     <label>
@@ -55,4 +55,4 @@ function set_selected($file, $session_file) {
   </script>
 <?php endif; ?>
 
-<?php include("includes/footer.php"); 
+<?php include("views/includes/footer.php"); 
