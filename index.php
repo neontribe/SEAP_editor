@@ -1,9 +1,16 @@
 <?php
 /**
  * @file
- * The main page for editing SEAP content
+ * app index
  *
  */
+require_once 'vendor/autoload.php';
+$loader = new Twig_Loader_Filesystem('views/');
+$twig = new Twig_Environment($loader);
+
+echo $twig->render('page.html', array('text' => 'Hello world!'));
+
+/**
 
 include('views/includes/header.php');
 
@@ -56,3 +63,4 @@ function set_selected($file, $session_file) {
 <?php endif; ?>
 
 <?php include("views/includes/footer.php"); 
+*/
