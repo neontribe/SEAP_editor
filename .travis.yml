@@ -1,0 +1,16 @@
+language: php 
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+env:
+  - TWIG_VERSION="~1.0"
+install:
+   - composer require twig/twig:${TWIG_VERSION}
+before_script:
+   - curl -s http://getcomposer.org/installer | php
+   - php composer.phar install --dev
+   #- npm install -g grunt-cli
+   - npm install -g casperjs@1.1.0-beta3
+after_success:
+  #- bash deploy.sh
