@@ -5,16 +5,17 @@ php:
   - 5.5
 env:
   - TWIG_VERSION="~1.0"
+  - ATOUM_VERSION="dev-master"
 install:
   - composer require twig/twig:${TWIG_VERSION}
+  - composer require atoum/atoum:${ATOUM_VERSION}
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
-  - wget http://downloads.atoum.org/nightly/mageekguy.atoum.phar
   #eventually test frontend as well
   #- npm install -g grunt-cli
   #- npm install -g casperjs@1.1.0-beta3
 script:
-  - php tests/atoum/*.atoum.phar
+  - ./vendor/bin/atoum -d tests/atoum
 after_success:
   #- bash deploy.sh
