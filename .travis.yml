@@ -15,6 +15,6 @@ before_script:
   #- npm install -g grunt-cli
   #- npm install -g casperjs@1.1.0-beta3
 script:
-  - php vendor/bin/atoum -d tests/atoum
+  - php atoum -d tests/atoum
 after_success:
   #- bash deploy.sh
