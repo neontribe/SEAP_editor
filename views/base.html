@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+      {% include 'includes/header.html' %}
+    {% endblock %}
+  </head>
+  <body>
+    <header role="banner">
+      <span aria-label="<?=BRAND ?> Editor Logo" role="img">
+        <?=BRAND ?> Editor
+      </span>
+      <nav class="to-main-menu" role="navigation">
+        <ul>
+          <li>
+            <a href="<?=BASE ?>load_new_file.php">File chooser</a>
+          </li>
+          <li>
+            <a href="<?=BASE ?>help.php">Help</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="page">
+      <div class="messages">
+        <?php if($_SESSION && isset($_SESSION['messages']) && $_SESSION['messages']): ?>
+          <?php foreach ($_SESSION['messages'] as $msg): ?>
+            <?= $msg ?>
+          <?php endforeach; ?>
+          <?php // Seen these - delete ?>
+          <?php $_SESSION['messages'] = ''; ?>
+        <?php endif;?>
+      </div>
+      <main>
+        <div id="content">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </main>
+      <div id="footer">
+        {% block footer %}
+          {% include 'includes/footer.html' %}
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,7 +8,7 @@ require_once 'vendor/autoload.php';
 $loader = new Twig_Loader_Filesystem('views/');
 $twig = new Twig_Environment($loader);
 
-echo $twig->render('page.html', array('text' => 'Hello world!'));
+echo $twig->render('index.html', array('content' => 'Hello World'));
 
 /**
 
