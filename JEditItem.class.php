@@ -35,10 +35,4 @@ class JEditItem {
     }
     return false;
   }
-
-  public function getHello()
-    {
-        return 'Hello';
-    }
-
 }
