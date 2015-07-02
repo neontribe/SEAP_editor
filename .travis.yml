@@ -1,6 +1,5 @@
 language: php 
 php:
-  - 5.3
   - 5.4
   - 5.5
 env:
@@ -16,6 +15,6 @@ before_script:
   #- npm install -g grunt-cli
   #- npm install -g casperjs@1.1.0-beta3
 script:
-  - ./vendor/bin/atoum -d tests/atoum
+  - php vendor/bin/atoum -d tests/atoum
 after_success:
   #- bash deploy.sh

@@ -1,4 +1,5 @@
-require_once __DIR__ . '/../../models/HelloWorld.php';
+<?php 
+require_once '../../models/HelloWorld.class.php';
 
 use atoum;
 
