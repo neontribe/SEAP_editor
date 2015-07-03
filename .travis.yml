@@ -1,17 +1,19 @@
-language: php 
+language: php
 php:
-  - 5.4
-  - 5.5
+- 5.4
+- 5.5
 install:
-  - composer require twig/twig:"~1.0"
-  - composer require atoum/atoum:"dev-master"
+- composer require twig/twig:"~1.0"
+- composer require atoum/atoum:"dev-master"
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
-  #eventually test frontend as well
-  #- npm install -g grunt-cli
-  #- npm install -g casperjs@1.1.0-beta3
+- curl -s http://getcomposer.org/installer | php
+- php composer.phar install --dev
 script:
-  - php vendor/bin/atoum -d tests/units
-after_success:
-  #- bash deploy.sh
+- php vendor/bin/atoum -d tests/units
+after_success: 
+deploy:
+  provider: heroku
+  api_key:
+    secure: L+FxYHN+HaOC+YLagylYXZalGM4FQvKpPziVW6YHtxK09H9Fc061kQx7McgfMA3677mI7R7U1v6McxVielyPTISxNPin/lR9JpoX+PhQ3KbYdH6i+kf9R/jwDb95yhaopN9T50wQG+IsDw9Dyy4iC9u7WXPNWPBHO6xPtOI+cBc=
+  app: seap-editor
+  on: master
