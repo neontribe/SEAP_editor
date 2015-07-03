@@ -1,0 +1,17 @@
+language: php 
+php:
+  - 5.4
+  - 5.5
+install:
+  - composer require twig/twig:"~1.0"
+  - composer require atoum/atoum:"dev-master"
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev
+  #eventually test frontend as well
+  #- npm install -g grunt-cli
+  #- npm install -g casperjs@1.1.0-beta3
+script:
+  - php vendor/bin/atoum -d tests/units
+after_success:
+  #- bash deploy.sh
