@@ -39,6 +39,12 @@ function set_selected($file, $session_file) {
   </div>
   <button type="submit" class="nav-link">Go to file</button>
 </form>
+<form action="upload_file.php" method="post" enctype="multipart/form-data">
+    Select json file to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload File" name="submit">
+</form>
+
 <div id="content">
   Please select a file to edit.
 </div>
