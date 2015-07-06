@@ -3,10 +3,18 @@ PHP based JSON editor for SEAP content
 
 master branch auto-deploys to http://seap-editor.herokuapp.com/
 
+## To get master source questions file (assessment-data.json)
+
+  - go to https://raw.githubusercontent.com/neontribe/SEAP_ESA/master/src/assessment-data.json
+  - right click any white space and select save as
+  - save file as ANYTHING.json
+  - upload the file at http://seap-editor.herokuapp.com/
+  - edit/ add/ delete questions and download for transfer to app repo as below
+
 ## To load new file contents to gh-pages staging app (e.g. http://neontribe.github.io/SEAP_ESA)
 
   - go to http://seap-editor.herokuapp.com/files/ESA-assesment-data.json
-  - select all contents of this text file
+  - select all contents of this json file
   - replace contents of file at https://github.com/neontribe/SEAP_ESA/tree/master/src/assessment-data.json with the selected text
   - commit new file to the repo (in any branch) - as long as tests pass, it will auto deply to gh-pages staging
 
