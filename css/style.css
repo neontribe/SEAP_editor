@@ -39,6 +39,12 @@ fieldset {
   padding: 0.75em;
 }
 
+form.upload {
+  border: 2px solid #79BDE9;
+  margin: 0;
+  padding: 0 8px;
+}
+
 .radio-list [type="radio"] {
   clip: rect(0px, 0px, 0px, 0px);
   position: absolute;
@@ -54,6 +60,9 @@ fieldset {
     width: 100%;
   }
 }
+
+
+/** ----- DEBUG and MESSAGES ---------------------------- **/
 
 .debug,
 .messages {
