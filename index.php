@@ -39,16 +39,15 @@ function set_selected($file, $session_file) {
   </div>
   <button type="submit" class="nav-link">Go to file</button>
 </form>
+<div id="content">
+  Please select a file to edit or upload a new one.
+</div>
 <form class="upload" action="upload_file.php" method="post" enctype="multipart/form-data">
     Select json file to upload:
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload File" name="submit">
     <input type="checkbox" name="replace" value="replace file">Tick to replace existing file.
 </form>
-
-<div id="content">
-  Please select a file to edit.
-</div>
 
 <!-- If there is a session file go straight to content.php -->
 <?php if ($session_file !==''): ?>
