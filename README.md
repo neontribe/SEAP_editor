@@ -15,6 +15,7 @@ master branch auto-deploys to http://seap-editor.herokuapp.com/
 
   - go to http://seap-editor.herokuapp.com/files/ESA-assesment-data.json
   - select all contents of this json file
+  - use this prettifyer https://jsonformatter.curiousconcept.com/
   - replace contents of file for 
       
   test-editor: https://github.com/neontribe/SEAP_ESA/tree/test-editor/src/assessment-data.json with the selected text
