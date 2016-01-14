@@ -17,6 +17,7 @@ $allfiles = scandir($dir);
 $files = array_diff($allfiles, $exclude);
 
 $session_file = '';
+$_SESSION['file'] = 'assessment-data.json';
 if (isset($_SESSION['file'])) { $session_file = $_SESSION['file']; }
 
 function set_selected($file, $session_file) {
