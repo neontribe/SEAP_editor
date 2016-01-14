@@ -28,18 +28,21 @@ $title_arr = explode('.', $filename);
 
     <ul class="questions">
       <?php foreach ($questions as $q): ?>
-      <li>
-        <div class="the-question">
-        <?= $q['question']; ?>
-      </div>
-      <div class="the-answers">
-        <?php foreach ($q['answers'] as $answer): ?>
-        <div class="the-label"><?= $answer->label; ?>
-        <?= $answer->value; ?></div>
+        <li>
+          <div class="the-question">
+            <?= $q['question']; ?>
+          </div>
+          <div class="the-answers">
+            <?php foreach ($q['answers'] as $answer): ?>
+              <div class="the-label">
+                <?= $answer->label; ?>
+                  :
+                  <?= $answer->value; ?>
+              </div>
+              <?php endforeach; ?>
+          </div>
+        </li>
         <?php endforeach; ?>
-      </div>
-      </li>
-      <?php endforeach; ?>
     </ul>
 
   <?php endforeach; ?>
