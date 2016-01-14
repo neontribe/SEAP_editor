@@ -84,6 +84,7 @@ form.upload {
   background: #6FE9BF;
 }
 
+
 .error {
   color: #990000;
   background: #E39088;
@@ -93,4 +94,34 @@ form.upload {
   display: none;
   background: #E9E991;
   font-size: small;
+}
+
+/** Printable.php styles **/
+.hide {
+  display: none;
+}
+
+.questions {
+  border-bottom: 2px dashed #79bde9;
+  margin-bottom: 2em;
+  padding-bottom: 1em;
+}
+
+.question-wrapper {
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.question-wrapper li {
+  justify-content: flex-start;
+}
+
+.the-answers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.the-label {
+  margin-top: 0;
 }
