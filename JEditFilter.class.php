@@ -82,7 +82,15 @@ class JEditFilter {
               'answers' => $c->answers,
       );
     }
-    ksort($grouped_content);
+    uksort($grouped_content, function($a, $b) {
+      if (strpos($a, '*') !== false) {
+        $a = str_replace('*', '', $a) . 'z';
+      }
+      if (strpos($b, '*') !== false) {
+        $b = str_replace('*', '', $b) . 'z';
+      }
+      return strcasecmp($a, $b);
+    });
     return $grouped_content;
   }
 }
