@@ -114,6 +114,12 @@ form.upload {
 
 .question-wrapper li {
   justify-content: flex-start;
+  border: 2px solid #79bde9;
+  padding: 1em;
+  margin-bottom: 0.5em;
+  list-style-type: none;
+  border-radius: 4px;
+  background: rgba(220, 240, 253, 0.7);
 }
 
 .the-answers {
@@ -125,4 +131,17 @@ form.upload {
 
 .the-label {
   margin-top: 0;
+}
+
+
+@media print {
+ #header,
+ #footer,
+ #nav {
+   display: none !important;
+ }
+
+ .question-wrapper {
+   display: block;
+ }
 }
