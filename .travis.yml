@@ -8,8 +8,6 @@ install:
 before_script:
 - curl -s http://getcomposer.org/installer | php
 - php composer.phar install --dev
-script:
-- php vendor/bin/atoum -d tests/units
 after_success: 
 deploy:
   provider: heroku
