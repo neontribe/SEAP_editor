@@ -14,6 +14,6 @@ after_success:
 deploy:
   provider: heroku
   api_key:
-    secure: L+FxYHN+HaOC+YLagylYXZalGM4FQvKpPziVW6YHtxK09H9Fc061kQx7McgfMA3677mI7R7U1v6McxVielyPTISxNPin/lR9JpoX+PhQ3KbYdH6i+kf9R/jwDb95yhaopN9T50wQG+IsDw9Dyy4iC9u7WXPNWPBHO6xPtOI+cBc=
+    secure: AXHk39MrtFJYS8fOH4Nq5WYsqd9iZ8nnc0Eg0+I17nm3/UAx3ARuPZKqF3Kybu0741nVnRUBRoOmT05ZlvcUDqBsnsEe+rU0Ng/iOgx45mYzDXnCEy1mm6uS7Jn+DgOv8DSYqj8ZUcxaeBOsDzAoSR9n6J/ZjPtu3YClQqHEwCs=
   app: seap-editor
   on: master

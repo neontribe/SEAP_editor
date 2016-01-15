@@ -19,6 +19,7 @@ $title_arr = explode('.', $filename);
 ?>
 
 <div class="print-button no-print"><button onclick="window.print()">Print</button></div>
+NOTE: Answers which have question text in them rather than a point value trigger followup questions. The followup questions can be found at the end of that activity section, with an * proceeding the activity name.
 <div class="question-wrapper">
 <h1 class="hide"><?= $title_arr[0]; ?></h1>
 <?php foreach ($content as $type => $gubbins): ?>
