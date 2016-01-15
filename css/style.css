@@ -134,6 +134,7 @@ form.upload {
 .the-label span {
   font-weight: 700;
 }
+
 .the-answers {
   display: flex;
   flex-direction: column;
@@ -144,26 +145,31 @@ form.upload {
   margin-top: 0;
 }
 
-
 @media print {
   body * + * {
     margin-top: 0 !important;
   }
+
   header {
     display: none;
   }
+
   .no-print {
     display: none;
   }
+
   li {
     page-break-inside: avoid;
   }
+
   .question-wrapper h2 {
     font-size: 1em;
   }
+
   .questions {
     margin-bottom: 0.5em;
   }
+
   .the-question,
   .the-label {
     font-size: 0.7em;
