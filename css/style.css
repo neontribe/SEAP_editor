@@ -120,11 +120,15 @@ form.upload {
   padding-bottom: 1em;
 }
 
+ul.questions {
+  margin-left: 0;
+}
+
 .question-wrapper li {
   border: 2px solid #79bde9;
-  padding: 1em 1em 0 1em;
+  padding: 0.5em 1em 0 1em;
   margin-bottom: 0.5em;
-  list-style-type: none;
+  list-style: none;
   border-radius: 4px;
   background: rgba(220, 240, 253, 0.7);
 }
@@ -144,7 +148,7 @@ form.upload {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-bottom: 1em;
+  margin: 0.5em 0;
 }
 
 .the-label {
