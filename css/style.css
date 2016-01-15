@@ -96,9 +96,22 @@ form.upload {
   font-size: small;
 }
 
+.print-button {
+  float: right;
+}
+
+.print-button button {
+  margin: 0;
+}
+
 /** Printable.php styles **/
 .hide {
   display: none;
+}
+
+.question-wrapper {
+  max-width: 1020px;
+  margin: 0 auto;
 }
 
 .questions {
@@ -107,25 +120,23 @@ form.upload {
   padding-bottom: 1em;
 }
 
-.question-wrapper {
-  max-width: 1020px;
-  margin: 0 auto;
-}
-
 .question-wrapper li {
   justify-content: flex-start;
   border: 2px solid #79bde9;
-  padding: 1em;
+  padding: 1em 1em 0 1em;
   margin-bottom: 0.5em;
   list-style-type: none;
   border-radius: 4px;
   background: rgba(220, 240, 253, 0.7);
 }
 
+.the-question,
+.the-label span {
+  font-weight: 700;
+}
 .the-answers {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   margin-bottom: 1em;
 }
 
@@ -135,13 +146,26 @@ form.upload {
 
 
 @media print {
- #header,
- #footer,
- #nav {
-   display: none !important;
- }
-
- .question-wrapper {
-   display: block;
- }
+  body * + * {
+    margin-top: 0 !important;
+  }
+  header {
+    display: none;
+  }
+  .no-print {
+    display: none;
+  }
+  li {
+    page-break-inside: avoid;
+  }
+  .question-wrapper h2 {
+    font-size: 1em;
+  }
+  .questions {
+    margin-bottom: 0.5em;
+  }
+  .the-question,
+  .the-label {
+    font-size: 0.7em;
+  }
 }

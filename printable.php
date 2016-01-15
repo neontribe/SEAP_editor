@@ -18,6 +18,7 @@ if(!$content) { die; }
 $title_arr = explode('.', $filename);
 ?>
 
+<div class="print-button no-print"><button onclick="window.print()">Print</button></div>
 <div class="question-wrapper">
 <h1 class="hide"><?= $title_arr[0]; ?></h1>
 <?php foreach ($content as $type => $gubbins): ?>
@@ -35,9 +36,7 @@ $title_arr = explode('.', $filename);
           <div class="the-answers">
             <?php foreach ($q['answers'] as $answer): ?>
               <div class="the-label">
-                <?= $answer->label; ?>
-                  :
-                  <?= $answer->value; ?>
+                <?= $answer->label; ?> : <span class="the-value"><?= $answer->value; ?></span>
               </div>
               <?php endforeach; ?>
           </div>
