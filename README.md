@@ -17,11 +17,11 @@ master branch auto-deploys to http://seap-editor.herokuapp.com/
   - select all contents of this json file
   - use this prettifyer https://jsonformatter.curiousconcept.com/
   - replace contents of file for 
-      
+
   test-editor: https://github.com/neontribe/SEAP_ESA/tree/test-editor/src/assessment-data.json with the selected text
-  
+
   master: https://github.com/neontribe/SEAP_ESA/tree/master/src/assessment-data.json with the selected text
-  
+
   - commit new file to the repo (in any branch) - as long as tests pass, it will auto deply to gh-pages staging
 
 ## Note
