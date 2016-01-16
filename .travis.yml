@@ -2,15 +2,8 @@ language: php
 php:
 - 5.4
 - 5.5
-install:
-- composer require twig/twig:"~1.0"
-- composer require atoum/atoum:"dev-master"
-before_script:
-- curl -s http://getcomposer.org/installer | php
-- php composer.phar install --dev
 script:
-- php vendor/bin/atoum -d tests/units
-after_success: 
+- phpunit tests/Test.php 
 deploy:
   provider: heroku
   api_key:
