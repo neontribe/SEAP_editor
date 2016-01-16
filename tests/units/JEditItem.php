@@ -1,6 +1,9 @@
 <?php
 namespace SEAP_editor\tests\units;
-require_once __DIR__ . '/../../JEditItem.class.php';
+
+include_once __DIR__ . '/../../JEditItem.class.php';
+
+use SEAP_editor\JEditItem;
 use atoum;
 /*
  * Test class for SEAP_editor\JEditItem
